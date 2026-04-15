@@ -397,9 +397,14 @@ p {
 
 .how-copy h2 {
   color: #eff7ff;
-  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
-  line-height: 1.08;
-  max-width: 16ch;
+  font-size: clamp(1.62rem, 2.8vw, 2.45rem);
+  line-height: 1.06;
+  max-width: 17ch;
+}
+
+.how-title-3lines span {
+  display: block;
+  white-space: nowrap;
 }
 
 .how-copy p {
@@ -1799,6 +1804,11 @@ p {
 
   .how-copy h2 {
     max-width: 100%;
+    font-size: clamp(1.5rem, 7.6vw, 2rem);
+  }
+
+  .how-title-3lines span {
+    white-space: normal;
   }
 
   .hero-stage-metrics {
