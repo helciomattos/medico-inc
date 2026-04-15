@@ -591,6 +591,12 @@ p {
   font-size: clamp(1.9rem, 4vw, 3.2rem);
 }
 
+.loss-grid header h2 {
+  font-size: clamp(1.7rem, 2.85vw, 2.45rem);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
 .checkout-express {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -1679,6 +1685,11 @@ p {
 }
 
 @media (max-width: 1120px) {
+  .loss-grid header h2 {
+    white-space: normal;
+    font-size: clamp(1.85rem, 4.8vw, 2.6rem);
+  }
+
   .benchmark-stage {
     padding: 18px;
   }
