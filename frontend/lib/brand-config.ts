@@ -1,5 +1,5 @@
 export const brandConfig = {
-  name: "Seu Site Medico",
+  name: "Médico INC",
   productName: "Site Medico Pro 2 Dias",
   offerPrice: 497,
   installments: 12,

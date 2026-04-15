@@ -1,31 +1,29 @@
-# Frontend - Estrutura White Label
+# Frontend - Medico INC (Next.js)
 
-Estrutura inspirada em projeto de producao, preparada para evoluir o frontend com separacao por modulos.
+Frontend organizado no padrao dos projetos principais:
 
-Pastas:
-
-- `app/`: paginas e rotas
+- `app/`: rotas Next.js
 - `components/`: componentes reutilizaveis
 - `hooks/`: hooks customizados
-- `lib/`: utilitarios e configuracoes
+- `lib/`: configuracoes e utilitarios
 - `services/`: integracoes HTTP
 - `stores/`: estado global
 - `types/`: tipagens
-- `public/`: assets estaticos
+- `public/`: assets e paginas estaticas da landing (`index.html`, `checkout.html`, etc.)
 - `scripts/`: automacoes de frontend
 
-## Estado atual
+## Como roda
 
-A landing em producao continua nos arquivos raiz do projeto para deploy rapido:
+1. `cd frontend`
+2. `npm install`
+3. `npm run dev`
 
-- `index.html`
-- `checkout.html`
-- `style.css`
-- `checkout.css`
-- `script.js`
-- `checkout.js`
+Rotas:
 
-## White label
+- `/` -> redireciona para `/index.html`
+- `/checkout` -> redireciona para `/checkout.html`
+- `/politica-de-privacidade` -> redireciona para `/politica-de-privacidade.html`
 
-Esta estrutura esta pronta para migrar para framework (ex: Next.js) sem carregar dados de outros produtos.
-A configuracao de marca fica centralizada em `lib/brand-config.ts`.
+## Marca
+
+Configuracao principal em `lib/brand-config.ts`.
