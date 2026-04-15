@@ -12,3 +12,5 @@ coverage/
 dist/
 supabase/.temp/
 LOGO SEU SITE MEDICO.png
+.vercel
+.env*.local
