@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+.vercel/
+.next/
+.env
+.env.*
+!.env.example
+preview-*.png
+*.log
+*.tmp
+coverage/
+dist/
+supabase/.temp/
+LOGO SEU SITE MEDICO.png

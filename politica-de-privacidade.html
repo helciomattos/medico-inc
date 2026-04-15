@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política de Privacidade | HUB Medi</title>
+    <meta
+      name="description"
+      content="Política de Privacidade da campanha HUB Medi, com informações sobre coleta, uso e proteção de dados pessoais conforme a LGPD."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="assets/brand/favicon-32.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f5ef;
+        --bg-2: #eceee4;
+        --ink: #17212d;
+        --muted: #445261;
+        --line: #ced5c4;
+        --brand: #08b7a5;
+        --brand-dark: #0a7d72;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        color: var(--ink);
+        background: linear-gradient(180deg, var(--bg), var(--bg-2));
+      }
+
+      .container {
+        width: min(940px, 92vw);
+        margin: 0 auto;
+      }
+
+      .top {
+        border-bottom: 1px solid var(--line);
+        background: rgba(245, 248, 241, 0.92);
+      }
+
+      .top-inner {
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--ink);
+      }
+
+      .brand img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .brand strong {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+      }
+
+      .back {
+        text-decoration: none;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        padding: 9px 14px;
+        color: #16384f;
+        font-weight: 700;
+        font-size: 0.85rem;
+      }
+
+      main {
+        padding: 38px 0 54px;
+      }
+
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+        line-height: 1.07;
+        margin: 0;
+      }
+
+      .lead {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.55;
+      }
+
+      .policy {
+        margin-top: 26px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: clamp(16px, 2.8vw, 28px);
+      }
+
+      .policy section + section {
+        margin-top: 22px;
+      }
+
+      h2 {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+      }
+
+      .policy p,
+      .policy li {
+        color: #36495a;
+        line-height: 1.62;
+      }
+
+      .policy p {
+        margin: 10px 0 0;
+      }
+
+      .policy ul {
+        margin: 10px 0 0;
+        padding-left: 20px;
+      }
+
+      .policy li + li {
+        margin-top: 6px;
+      }
+
+      .update {
+        margin-top: 24px;
+        font-size: 0.84rem;
+        color: #4f6070;
+      }
+
+      .support-box {
+        margin-top: 24px;
+        border: 1px solid #c7d8d1;
+        border-radius: 16px;
+        background: linear-gradient(130deg, #eff8f4, #f7fcf9);
+        padding: 16px;
+      }
+
+      .support-box strong {
+        display: block;
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+      }
+
+      .support-box a {
+        display: inline-flex;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #fff;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: 10px 15px;
+        background: linear-gradient(130deg, var(--brand-dark), #0fa99d 55%, #11c9b6);
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: rgba(245, 248, 241, 0.92);
+      }
+
+      .site-footer-inner {
+        min-height: 74px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 0;
+      }
+
+      .site-footer p {
+        margin: 0;
+        color: #4f6070;
+        font-size: 0.9rem;
+      }
+
+      .site-footer p a {
+        color: #0e7f93;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .site-footer p a:hover {
+        color: #0a6778;
+      }
+
+      .site-footer nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .site-footer nav a {
+        text-decoration: none;
+        color: #18344d;
+        font-weight: 700;
+        font-size: 0.88rem;
+      }
+
+      .whatsapp-float {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 30;
+        width: 58px;
+        height: 58px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #25d366;
+        border: 1px solid rgba(22, 96, 59, 0.28);
+        box-shadow: 0 16px 34px rgba(23, 62, 44, 0.35);
+        transition: transform 0.22s ease;
+      }
+
+      .whatsapp-float:hover {
+        transform: translateY(-3px) scale(1.02);
+      }
+
+      .whatsapp-float img {
+        width: 30px;
+        height: 30px;
+      }
+
+      @media (max-width: 720px) {
+        .top-inner {
+          min-height: auto;
+          padding: 12px 0;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .site-footer-inner {
+          min-height: auto;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 16px 0;
+        }
+
+        .whatsapp-float {
+          width: 52px;
+          height: 52px;
+          right: 14px;
+          bottom: 14px;
+        }
+
+        .whatsapp-float img {
+          width: 28px;
+          height: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="container top-inner">
+        <a href="index.html" class="brand" aria-label="Voltar para página inicial">
+          <img src="assets/brand/favicon-32.png" alt="HUB Medi" />
+          <strong>HUB MEDI</strong>
+        </a>
+        <a class="back" href="index.html">Voltar para a página principal</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h1>Política de Privacidade</h1>
+        <p class="lead">
+          Esta política descreve como tratamos dados pessoais no contexto da campanha
+          e prestação do serviço de criação de site para médicos e clínicas.
+        </p>
+
+        <article class="policy">
+          <section>
+            <h2>1. Dados que coletamos</h2>
+            <p>
+              Podemos coletar nome, email, telefone/WhatsApp, CPF/CNPJ, dados de
+              pagamento e informações enviadas no briefing do projeto.
+            </p>
+          </section>
+
+          <section>
+            <h2>2. Finalidades do uso dos dados</h2>
+            <ul>
+              <li>Responder solicitações comerciais e de suporte.</li>
+              <li>Processar pagamento e emitir confirmação da compra.</li>
+              <li>Executar entrega do site contratado e onboarding.</li>
+              <li>Cumprir obrigações legais e regulatórias.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>3. Bases legais (LGPD)</h2>
+            <p>
+              O tratamento é realizado com base em execução de contrato, cumprimento
+              de obrigação legal, legítimo interesse e, quando necessário, consentimento.
+            </p>
+          </section>
+
+          <section>
+            <h2>4. Compartilhamento de dados</h2>
+            <p>
+              Dados podem ser compartilhados com provedores de pagamento (Mercado Pago e
+              Stripe), hospedagem, analytics e ferramentas estritamente necessárias para
+              operação, sempre com critérios de segurança e minimização de dados.
+            </p>
+          </section>
+
+          <section>
+            <h2>5. Cookies e métricas</h2>
+            <p>
+              Utilizamos cookies e identificadores para medir tráfego, origem de visitas,
+              desempenho de campanhas e melhoria contínua da experiência.
+            </p>
+          </section>
+
+          <section>
+            <h2>6. Armazenamento e segurança</h2>
+            <p>
+              Adotamos medidas técnicas e administrativas de proteção, incluindo controle
+              de acesso, conexões seguras e revisão de fornecedores.
+            </p>
+          </section>
+
+          <section>
+            <h2>7. Direitos do titular</h2>
+            <p>
+              Você pode solicitar confirmação de tratamento, acesso, correção, anonimização,
+              eliminação de dados desnecessários, portabilidade e revogação de consentimento,
+              conforme a legislação aplicável.
+            </p>
+          </section>
+
+          <section>
+            <h2>8. Contato para privacidade e suporte</h2>
+            <p>
+              Para dúvidas sobre privacidade, solicitação de direitos LGPD ou suporte
+              comercial, fale conosco pelo WhatsApp oficial.
+            </p>
+          </section>
+
+          <p class="update">Última atualização: 15 de abril de 2026.</p>
+
+          <div class="support-box">
+            <strong>Suporte via WhatsApp</strong>
+            <p>Atendimento comercial e dúvidas sobre contratação.</p>
+            <a
+              href="https://wa.me/5521979863949?text=Ol%C3%A1%2C%20quero%20adquirir%20o%20site%20mas%20tenho%20d%C3%BAvidas"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Falar no WhatsApp</a
+            >
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p>
+          © 2026 HUB Medi. Todos os direitos reservados. Site desenvolvido por
+          <a href="https://vigainteligencia.com" target="_blank" rel="noopener noreferrer"
+            >VIGA</a
+          >.
+        </p>
+        <nav aria-label="Links legais e suporte">
+          <a href="politica-de-privacidade.html">Política de Privacidade</a>
+          <a
+            href="https://wa.me/5521979863949?text=Ol%C3%A1%2C%20quero%20adquirir%20o%20site%20mas%20tenho%20d%C3%BAvidas"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Suporte WhatsApp</a
+          >
+        </nav>
+      </div>
+    </footer>
+
+    <a
+      class="whatsapp-float"
+      href="https://wa.me/5521979863949?text=Ol%C3%A1%2C%20quero%20adquirir%20o%20site%20mas%20tenho%20d%C3%BAvidas"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Falar no WhatsApp"
+    >
+      <img src="assets/logos/whatsapp.svg" alt="" aria-hidden="true" />
+    </a>
+  </body>
+</html>

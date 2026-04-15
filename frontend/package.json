@@ -1,0 +1,9 @@
+{
+  "name": "seu-site-medico-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "python3 -m http.server 8081 --directory ../",
+    "dev:public": "python3 -m http.server 8082 --directory ./public"
+  }
+}

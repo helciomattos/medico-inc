@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout | Site Médico em 2 Dias por R$497</title>
+    <meta
+      name="description"
+      content="Finalize sua contratação do Site Médico em 2 dias. Pagamento com Mercado Pago e Stripe, com cartão ou PIX."
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="assets/brand/favicon-32.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="checkout.css?v=20260415-06" />
+  </head>
+  <body>
+    <header class="ribbon">
+      <div class="ribbon-brand">
+        <img src="assets/brand/logo-seu-site-medico.png" alt="HUB Medi" />
+      </div>
+      <div class="ribbon-offer">
+        <strong>Oferta ativa:</strong> de R$1.997 por R$497 • <span id="topTimer">15:00</span>
+      </div>
+      <a href="index.html">Voltar para a landing</a>
+    </header>
+
+    <main class="checkout-shell">
+      <section class="checkout-main">
+        <div class="stepper" id="stepper">
+          <button class="step is-active" data-step="1" type="button">1. Dados</button>
+          <button class="step" data-step="2" type="button">2. Adicionais</button>
+          <button class="step" data-step="3" type="button">3. Pagamento</button>
+        </div>
+
+        <form id="checkoutForm" novalidate>
+          <section class="panel" data-panel="1">
+            <p class="kicker">ETAPA 1</p>
+            <h1>Finalize seu Site Médico em 2 Dias</h1>
+            <p class="lead">
+              Preencha seus dados para iniciar seu projeto. Processo rápido, seguro e com
+              confirmação imediata.
+            </p>
+
+            <div class="grid two">
+              <label>
+                Nome completo
+                <input type="text" name="name" required placeholder="Dr(a). Nome Sobrenome" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" required placeholder="voce@clinica.com.br" />
+              </label>
+              <label>
+                WhatsApp
+                <input type="tel" name="phone" required placeholder="(11) 99999-9999" />
+              </label>
+              <label>
+                Tipo de documento
+                <select name="documentType" id="documentType" required>
+                  <option value="CPF">CPF</option>
+                  <option value="CNPJ">CNPJ</option>
+                </select>
+              </label>
+              <label>
+                <span id="documentLabel">CPF</span>
+                <input type="text" name="document" id="document" required placeholder="000.000.000-00" />
+              </label>
+              <label>
+                Nome da clínica (opcional)
+                <input type="text" name="companyName" placeholder="Clínica Exemplo" />
+              </label>
+            </div>
+
+            <label class="check-row">
+              <input type="checkbox" name="lgpd" required />
+              Autorizo o uso dos dados para processar contratação e atendimento (LGPD).
+            </label>
+          </section>
+
+          <section class="panel hidden" data-panel="2">
+            <p class="kicker">ETAPA 2</p>
+            <h2>Acelere seus resultados já no lançamento</h2>
+            <p class="lead">Adicionais opcionais para aumentar captação e previsibilidade.</p>
+
+            <div class="bump-list" id="bumpList"></div>
+          </section>
+
+          <section class="panel hidden" data-panel="3">
+            <p class="kicker">ETAPA 3</p>
+            <h2>Pagamento seguro (Mercado Pago + Stripe)</h2>
+            <p class="lead">Escolha a forma de pagamento e confirme sua contratação.</p>
+
+            <div class="payment-methods" role="radiogroup" aria-label="Forma de pagamento">
+              <label class="pay-option is-active">
+                <input type="radio" name="paymentMethod" value="credit_card" checked />
+                Cartão de Crédito
+              </label>
+              <label class="pay-option">
+                <input type="radio" name="paymentMethod" value="pix" />
+                PIX
+              </label>
+              <label class="pay-option" id="applePayOption">
+                <input type="radio" name="paymentMethod" value="apple_pay" />
+                Apple Pay (Stripe)
+              </label>
+            </div>
+
+            <div class="gateway-pill">
+              Gateways ativos: <strong>Mercado Pago</strong> + <strong>Stripe</strong>
+            </div>
+
+            <div id="creditCardFields" class="grid two payment-fields">
+              <label>
+                Nome no cartão
+                <input type="text" name="cardHolder" placeholder="Nome como no cartão" />
+              </label>
+              <label>
+                Número do cartão
+                <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000" />
+              </label>
+              <label>
+                Validade
+                <input type="text" name="cardExpiry" placeholder="MM/AA" />
+              </label>
+              <label>
+                CVV
+                <input type="text" name="cardCvv" placeholder="123" />
+              </label>
+              <label>
+                Parcelas
+                <select name="installments" id="installments"></select>
+              </label>
+            </div>
+
+            <div id="pixFields" class="payment-alt hidden">
+              <p>Ao confirmar, geraremos QR Code e código PIX para pagamento imediato.</p>
+            </div>
+
+            <div id="applePayFields" class="payment-alt hidden">
+              <p>
+                Apple Pay usa Stripe Checkout/Payment Intent. Requer configuração da chave
+                pública Stripe e domínio validado.
+              </p>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button type="button" id="prevBtn" class="btn ghost hidden">Voltar</button>
+            <button type="button" id="nextBtn" class="btn primary">Continuar</button>
+            <button type="submit" id="submitBtn" class="btn primary hidden">
+              CONFIRMAR COMPRA E INICIAR PROJETO
+            </button>
+          </div>
+        </form>
+
+        <div class="status-box hidden" id="statusBox"></div>
+      </section>
+
+      <aside class="checkout-summary">
+        <p class="kicker">Resumo da compra</p>
+        <h3>Site Médico Pro 2 Dias</h3>
+
+        <div class="line"><span>Produto principal</span><strong>R$497</strong></div>
+        <div id="summaryBumps"></div>
+        <div class="line total"><span>Total</span><strong id="totalValue">R$497</strong></div>
+
+        <ul>
+          <li>Entrega em até 2 dias úteis após briefing</li>
+          <li>12x sem juros no cartão</li>
+          <li>Onboarding por WhatsApp e email</li>
+        </ul>
+
+        <div class="trust">
+          <span>Pagamento Seguro</span>
+          <span>LGPD</span>
+          <span>Checkout criptografado</span>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer checkout-footer">
+      <div class="checkout-shell">
+        <div class="site-footer-inner">
+          <p>
+            © 2026 HUB Medi. Todos os direitos reservados. Site desenvolvido por
+            <a href="https://vigainteligencia.com" target="_blank" rel="noopener noreferrer"
+              >VIGA</a
+            >.
+          </p>
+          <nav aria-label="Links legais e suporte">
+            <a href="politica-de-privacidade.html">Política de Privacidade</a>
+            <a
+              href="https://wa.me/5521979863949?text=Ol%C3%A1%2C%20quero%20adquirir%20o%20site%20mas%20tenho%20d%C3%BAvidas"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Suporte WhatsApp</a
+            >
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <a
+      class="whatsapp-float"
+      href="https://wa.me/5521979863949?text=Ol%C3%A1%2C%20quero%20adquirir%20o%20site%20mas%20tenho%20d%C3%BAvidas"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Falar no WhatsApp"
+    >
+      <img src="assets/logos/whatsapp.svg" alt="" aria-hidden="true" />
+    </a>
+
+    <script>
+      window.CHECKOUT_CONFIG = {
+        apiBase: "",
+        product: {
+          id: "site-medico-2-dias",
+          name: "Site Médico Pro 2 Dias",
+          basePrice: 497,
+          installmentsMax: 12,
+          deliveryLabel: "até 2 dias"
+        },
+        orderBumps: [
+          {
+            id: "bump_seo_local",
+            name: "SEO Local + Google Meu Negócio",
+            description: "Ajustes para Google e Google Maps",
+            price: 197,
+            selectedByDefault: true
+          },
+          {
+            id: "bump_metricas",
+            name: "Pacote Conversão + Métricas (GA4 + UTM)",
+            description: "Rastreamento completo de origem de pacientes",
+            price: 147,
+            selectedByDefault: false
+          },
+          {
+            id: "bump_copy",
+            name: "Kit Conteúdo Médico Inicial",
+            description: "Estrutura de copy pronta para acelerar publicação",
+            price: 97,
+            selectedByDefault: false
+          }
+        ],
+        gateways: {
+          mercadopago: {
+            enabled: true,
+            publicKey: "",
+            endpoint: "/api/checkout/enterprise"
+          },
+          stripe: {
+            enabled: true,
+            publishableKey: "",
+            endpoint: "/api/checkout/stripe"
+          }
+        },
+        endpoints: {
+          saveDraft: "/api/checkout/save-draft",
+          status: "/api/checkout/status"
+        }
+      };
+    </script>
+    <script src="checkout.js?v=20260415-02"></script>
+  </body>
+</html>
