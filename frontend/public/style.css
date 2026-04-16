@@ -1641,6 +1641,14 @@ p {
   background: linear-gradient(180deg, #ff7900, #e05a00);
 }
 
+.advertorial-card-body--exame::before {
+  background: linear-gradient(180deg, #e02020, #9a1515);
+}
+
+.advertorial-card-body--terra::before {
+  background: linear-gradient(180deg, #0d8f4a, #0a6b38);
+}
+
 .advertorial-outlet {
   font-size: 0.78rem;
   font-weight: 700;
@@ -1668,6 +1676,14 @@ p {
   background: #ff7900;
 }
 
+.advertorial-pill--exame {
+  background: #1a1a1a;
+}
+
+.advertorial-pill--terra {
+  background: #0d8f4a;
+}
+
 .advertorial-tag {
   font-size: 0.68rem;
   text-transform: uppercase;
@@ -1679,6 +1695,14 @@ p {
 
 .advertorial-card-body--host .advertorial-tag {
   color: #c45a00;
+}
+
+.advertorial-card-body--exame .advertorial-tag {
+  color: #9a1515;
+}
+
+.advertorial-card-body--terra .advertorial-tag {
+  color: #0a6b38;
 }
 
 .advertorial-headline {
@@ -1714,6 +1738,22 @@ p {
 
 .advertorial-card-body--host .advertorial-cta {
   color: #c75400;
+}
+
+.advertorial-card-body--exame .advertorial-cta {
+  color: #9a1515;
+}
+
+.advertorial-card-body--exame .advertorial-cta:hover {
+  color: #6b0e0e;
+}
+
+.advertorial-card-body--terra .advertorial-cta {
+  color: #0a6b38;
+}
+
+.advertorial-card-body--terra .advertorial-cta:hover {
+  color: #064724;
 }
 
 .advertorial-ext {
