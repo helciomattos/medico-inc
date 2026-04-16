@@ -3680,6 +3680,15 @@ details summary:focus-visible {
   box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.06);
 }
 
+.iphone-screen-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 38px;
+}
+
 .ps-nav {
   position: absolute;
   top: 0;
