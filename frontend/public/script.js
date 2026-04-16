@@ -397,6 +397,16 @@
     const prev = carousel.querySelector('.press-nav.prev');
     const next = carousel.querySelector('.press-nav.next');
 
+    // Clona os cards para criar loop infinito sem "salto" perceptível
+    const originals = Array.from(track.children);
+    if (!originals.length) return;
+    originals.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.tabIndex = -1;
+      track.appendChild(clone);
+    });
+
     const step = () => {
       const card = track.querySelector('.press-card');
       if (!card) return 320;
@@ -404,8 +414,66 @@
       return card.getBoundingClientRect().width + gap;
     };
 
-    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next?.addEventListener('click', () => track.scrollBy({ left:  step(), behavior: 'smooth' }));
+    // Quando o usuário (ou o autoplay) chega no fim da metade clonada,
+    // reposiciona instantaneamente sem animação para o início equivalente.
+    let isProgrammaticScroll = false;
+    const checkLoop = () => {
+      if (isProgrammaticScroll) return;
+      const half = track.scrollWidth / 2;
+      if (track.scrollLeft >= half) {
+        track.scrollLeft -= half;
+      } else if (track.scrollLeft < 0) {
+        track.scrollLeft += half;
+      }
+    };
+    track.addEventListener('scroll', checkLoop, { passive: true });
+
+    const scrollByStep = (dir) => {
+      isProgrammaticScroll = true;
+      track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+      // Libera o checkLoop após a animação terminar (~500ms)
+      setTimeout(() => {
+        isProgrammaticScroll = false;
+        checkLoop();
+      }, 600);
+    };
+
+    prev?.addEventListener('click', () => scrollByStep(-1));
+    next?.addEventListener('click', () => scrollByStep(1));
+
+    // Autoplay: avança 1 card a cada 4s; pausa em hover, foco ou fora da viewport
+    const AUTOPLAY_MS = 4000;
+    let timer = null;
+    let paused = false;
+
+    const tick = () => {
+      if (paused) return;
+      scrollByStep(1);
+    };
+    const start = () => {
+      stop();
+      timer = setInterval(tick, AUTOPLAY_MS);
+    };
+    const stop = () => {
+      if (timer) { clearInterval(timer); timer = null; }
+    };
+
+    const setPaused = (state) => { paused = state; };
+    carousel.addEventListener('mouseenter', () => setPaused(true));
+    carousel.addEventListener('mouseleave', () => setPaused(false));
+    carousel.addEventListener('focusin', () => setPaused(true));
+    carousel.addEventListener('focusout', () => setPaused(false));
+    document.addEventListener('visibilitychange', () => setPaused(document.hidden));
+
+    // Só roda quando estiver visível na tela (poupa CPU)
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => e.isIntersecting ? start() : stop());
+      }, { threshold: 0.2 });
+      io.observe(carousel);
+    } else {
+      start();
+    }
   }
 
   // ─── Init ─────────────────────────────────────────────────────────────────────
