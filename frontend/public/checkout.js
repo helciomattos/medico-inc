@@ -134,12 +134,14 @@
       const row = document.createElement("label");
       row.className = `bump-item ${bump.selected ? "selected" : ""}`;
       row.innerHTML = `
-        <input type="checkbox" ${bump.selected ? "checked" : ""} data-bump-index="${index}" />
-        <div class="meta">
-          <h4>${bump.name}</h4>
-          <p>${bump.description}</p>
-          <strong>+ ${money(Number(bump.price || 0))}</strong>
-        </div>
+        <span class="bump-check">
+          <input type="checkbox" ${bump.selected ? "checked" : ""} data-bump-index="${index}" />
+        </span>
+        <span class="bump-body">
+          <span class="bump-title">${bump.name}</span>
+          <span class="bump-desc">${bump.description}</span>
+          <span class="bump-price">+ ${money(Number(bump.price || 0))}</span>
+        </span>
       `;
       bumpList.appendChild(row);
     });
