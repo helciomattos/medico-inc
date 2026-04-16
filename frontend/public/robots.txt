@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://seusitemedico.com.br/sitemap.xml
+Sitemap: https://medicoinc.com.br/sitemap.xml

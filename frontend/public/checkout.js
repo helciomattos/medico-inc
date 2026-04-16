@@ -1,20 +1,79 @@
 (function () {
+  "use strict";
+
+  // ─── Validadores ─────────────────────────────────────────────────────────────
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
+  }
+
+  function isValidCPF(raw) {
+    const digits = raw.replace(/\D/g, "");
+    if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) return false;
+    let sum = 0;
+    for (let i = 0; i < 9; i++) sum += Number(digits[i]) * (10 - i);
+    let r = (sum * 10) % 11;
+    if (r === 10 || r === 11) r = 0;
+    if (r !== Number(digits[9])) return false;
+    sum = 0;
+    for (let i = 0; i < 10; i++) sum += Number(digits[i]) * (11 - i);
+    r = (sum * 10) % 11;
+    if (r === 10 || r === 11) r = 0;
+    return r === Number(digits[10]);
+  }
+
+  function isValidCNPJ(raw) {
+    const digits = raw.replace(/\D/g, "");
+    if (digits.length !== 14 || /^(\d)\1{13}$/.test(digits)) return false;
+    const calc = (d, n) => {
+      let sum = 0;
+      let pos = n - 7;
+      for (let i = n; i >= 1; i--) {
+        sum += Number(d[n - i]) * pos--;
+        if (pos < 2) pos = 9;
+      }
+      const r = sum % 11;
+      return r < 2 ? 0 : 11 - r;
+    };
+    return (
+      calc(digits, 12) === Number(digits[12]) &&
+      calc(digits, 13) === Number(digits[13])
+    );
+  }
+
+  // ─── Config e estado ──────────────────────────────────────────────────────────
+
   const config = window.CHECKOUT_CONFIG || {};
+
+  // idempotencyKey persiste na sessão para evitar duplicatas se usuário navegar
+  // entre passos, mas reseta ao recarregar a página (comportamento correto).
+  const IDEM_KEY = "co_idem_" + (config.product?.id || "product");
+  let idempotencyKey = sessionStorage.getItem(IDEM_KEY);
+  if (!idempotencyKey) {
+    idempotencyKey =
+      (window.crypto?.randomUUID?.()) ||
+      `id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    sessionStorage.setItem(IDEM_KEY, idempotencyKey);
+  }
 
   const state = {
     step: 1,
     timeLeft: 15 * 60,
     bumps: (config.orderBumps || []).map((b) => ({ ...b, selected: !!b.selectedByDefault })),
     paymentMethod: "credit_card",
-    idempotencyKey: (window.crypto && crypto.randomUUID && crypto.randomUUID()) || `id-${Date.now()}`,
+    idempotencyKey,
     utm: Object.fromEntries(new URLSearchParams(window.location.search).entries())
   };
+
   const localApiBase = String(
     config.apiBase ||
-      ((window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost")
+      ((window.location.hostname === "127.0.0.1" ||
+        window.location.hostname === "localhost")
         ? "http://127.0.0.1:8787"
         : "")
   ).replace(/\/$/, "");
+
+  // ─── Elementos DOM ────────────────────────────────────────────────────────────
 
   const form = document.getElementById("checkoutForm");
   const stepButtons = Array.from(document.querySelectorAll(".step"));
@@ -35,13 +94,20 @@
   const pixFields = document.getElementById("pixFields");
   const applePayFields = document.getElementById("applePayFields");
 
+  // ─── Utilitários ─────────────────────────────────────────────────────────────
+
   const money = (value) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
   function track(event, payload = {}) {
+    // Google Tag Manager / GA4
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event, ...payload });
-    console.log(`[TRACK] ${event}`, payload);
+
+    // gtag direto (se disponível)
+    if (typeof window.gtag === "function") {
+      window.gtag("event", event, payload);
+    }
   }
 
   function resolveEndpoint(path) {
@@ -57,6 +123,8 @@
       .reduce((sum, b) => sum + Number(b.price || 0), 0);
     return base + bumpsTotal;
   }
+
+  // ─── Renderização ─────────────────────────────────────────────────────────────
 
   function renderBumps() {
     if (!bumpList) return;
@@ -82,7 +150,7 @@
         state.bumps[i].selected = e.target.checked;
         renderBumps();
         renderSummary();
-        track("AddToCart", {
+        track("bump_toggle", {
           bump_id: state.bumps[i].id,
           selected: state.bumps[i].selected,
           value: getTotal()
@@ -117,11 +185,11 @@
     });
 
     prevBtn.classList.toggle("hidden", state.step === 1);
-    nextBtn.classList.toggle("hidden", state.step === 3);
+    nextBtn.classList.toggle("hidden", state.step >= 3);
     submitBtn.classList.toggle("hidden", state.step !== 3);
 
     if (state.step === 3) {
-      track("AddPaymentInfo", { value: getTotal() });
+      track("checkout_payment_step", { value: getTotal() });
     }
   }
 
@@ -130,6 +198,7 @@
     statusBox.classList.remove("hidden", "error");
     if (isError) statusBox.classList.add("error");
     statusBox.innerHTML = message;
+    statusBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function hideStatus() {
@@ -141,11 +210,15 @@
   function fillInstallments() {
     if (!installments) return;
     const max = Number(config.product?.installmentsMax || 1);
+    const base = Number(config.product?.basePrice || 0);
     installments.innerHTML = "";
-    for (let i = 1; i <= max; i += 1) {
+    for (let i = 1; i <= max; i++) {
       const option = document.createElement("option");
       option.value = String(i);
-      option.textContent = `${i}x`;
+      const value = i === 1 ? base : (base / i);
+      option.textContent = i === 1
+        ? `1x de ${money(base)} (à vista)`
+        : `${i}x de ${money(value)} sem juros`;
       installments.appendChild(option);
     }
   }
@@ -173,8 +246,23 @@
     }
   }
 
+  function applyCardNumberMask() {
+    const field = form.querySelector("input[name='cardNumber']");
+    if (!field) return;
+    const digits = field.value.replace(/\D/g, "").slice(0, 16);
+    field.value = digits.replace(/(\d{4})(?=\d)/g, "$1 ");
+  }
+
+  function applyCardExpiryMask() {
+    const field = form.querySelector("input[name='cardExpiry']");
+    if (!field) return;
+    const digits = field.value.replace(/\D/g, "").slice(0, 4);
+    field.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+  }
+
   function updatePaymentMethodUI() {
-    const selected = form.querySelector("input[name='paymentMethod']:checked")?.value || "credit_card";
+    const selected =
+      form.querySelector("input[name='paymentMethod']:checked")?.value || "credit_card";
     state.paymentMethod = selected;
 
     document.querySelectorAll(".pay-option").forEach((el) => {
@@ -187,50 +275,113 @@
     applePayFields.classList.toggle("hidden", selected !== "apple_pay");
   }
 
-  function validateStep(step) {
-    if (step === 1) {
-      const required = [
-        "input[name='name']",
-        "input[name='email']",
-        "input[name='phone']",
-        "input[name='document']",
-        "input[name='lgpd']"
-      ];
+  // ─── Validação ────────────────────────────────────────────────────────────────
 
-      for (const selector of required) {
-        const field = form.querySelector(selector);
-        if (!field) continue;
-        if (field.type === "checkbox" && !field.checked) {
-          setStatus("Aceite os termos LGPD para continuar.", true);
-          return false;
-        }
-        if (field.type !== "checkbox" && !String(field.value || "").trim()) {
-          setStatus("Preencha os campos obrigatórios para avançar.", true);
-          field.focus();
-          return false;
-        }
+  function showFieldError(field, message) {
+    field.classList.add("has-error");
+    let err = field.parentElement.querySelector(".field-error");
+    if (!err) {
+      err = document.createElement("span");
+      err.className = "field-error";
+      field.parentElement.appendChild(err);
+    }
+    err.textContent = message;
+    field.focus();
+  }
+
+  function clearFieldErrors() {
+    form.querySelectorAll(".has-error").forEach((el) => el.classList.remove("has-error"));
+    form.querySelectorAll(".field-error").forEach((el) => el.remove());
+  }
+
+  function validateStep(step) {
+    clearFieldErrors();
+
+    if (step === 1) {
+      const nameField = form.querySelector("input[name='name']");
+      const emailField = form.querySelector("input[name='email']");
+      const phoneField = form.querySelector("input[name='phone']");
+      const documentField = form.querySelector("input[name='document']");
+      const lgpdField = form.querySelector("input[name='lgpd']");
+
+      if (!nameField.value.trim() || nameField.value.trim().length < 3) {
+        setStatus("Informe seu nome completo.", true);
+        showFieldError(nameField, "Nome obrigatório");
+        return false;
+      }
+
+      if (!isValidEmail(emailField.value)) {
+        setStatus("Informe um email válido (ex: voce@clinica.com.br).", true);
+        showFieldError(emailField, "Email inválido");
+        return false;
+      }
+
+      const phoneDigits = phoneField.value.replace(/\D/g, "");
+      if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+        setStatus("Informe um WhatsApp válido com DDD.", true);
+        showFieldError(phoneField, "Telefone inválido");
+        return false;
+      }
+
+      const docType = documentType.value;
+      const docValue = documentField.value;
+      if (docType === "CPF" && !isValidCPF(docValue)) {
+        setStatus("CPF inválido. Verifique os dígitos.", true);
+        showFieldError(documentField, "CPF inválido");
+        return false;
+      }
+      if (docType === "CNPJ" && !isValidCNPJ(docValue)) {
+        setStatus("CNPJ inválido. Verifique os dígitos.", true);
+        showFieldError(documentField, "CNPJ inválido");
+        return false;
+      }
+
+      if (!lgpdField.checked) {
+        setStatus("Aceite os termos LGPD para continuar.", true);
+        return false;
       }
 
       hideStatus();
-      track("InitiateCheckout", { value: getTotal() });
+      track("checkout_step_1_complete", { value: getTotal() });
+      return true;
+    }
+
+    if (step === 2) {
+      hideStatus();
+      track("checkout_step_2_complete", {
+        bumps_selected: state.bumps.filter((b) => b.selected).map((b) => b.id),
+        value: getTotal()
+      });
       return true;
     }
 
     if (step === 3 && state.paymentMethod === "credit_card") {
-      const ccRequired = [
-        "input[name='cardHolder']",
-        "input[name='cardNumber']",
-        "input[name='cardExpiry']",
-        "input[name='cardCvv']"
-      ];
+      const cardHolder = form.querySelector("input[name='cardHolder']");
+      const cardNumber = form.querySelector("input[name='cardNumber']");
+      const cardExpiry = form.querySelector("input[name='cardExpiry']");
+      const cardCvv = form.querySelector("input[name='cardCvv']");
 
-      for (const selector of ccRequired) {
-        const field = form.querySelector(selector);
-        if (!String(field?.value || "").trim()) {
-          setStatus("Preencha os dados do cartão para continuar.", true);
-          field?.focus();
-          return false;
-        }
+      if (!cardHolder.value.trim()) {
+        setStatus("Informe o nome impresso no cartão.", true);
+        showFieldError(cardHolder, "Obrigatório");
+        return false;
+      }
+      const cardDigits = cardNumber.value.replace(/\D/g, "");
+      if (cardDigits.length < 13 || cardDigits.length > 19) {
+        setStatus("Número de cartão inválido.", true);
+        showFieldError(cardNumber, "Número inválido");
+        return false;
+      }
+      if (!/^\d{2}\/\d{2}$/.test(cardExpiry.value.trim())) {
+        setStatus("Validade inválida. Use o formato MM/AA.", true);
+        showFieldError(cardExpiry, "Formato MM/AA");
+        return false;
+      }
+      const cvvDigits = cardCvv.value.replace(/\D/g, "");
+      if (cvvDigits.length < 3 || cvvDigits.length > 4) {
+        setStatus("CVV inválido.", true);
+        showFieldError(cardCvv, "CVV inválido");
+        return false;
       }
     }
 
@@ -238,39 +389,56 @@
     return true;
   }
 
+  // ─── Rascunho — somente dados não-sensíveis, sessionStorage ──────────────────
+
+  const DRAFT_KEY = "co_draft_" + (config.product?.id || "product");
+
   function saveDraft() {
+    // SEGURANÇA: Nunca salvar CPF/CNPJ, CVV ou dados de cartão.
+    // sessionStorage é automaticamente limpo ao fechar a aba.
     const payload = {
       step: state.step,
       paymentMethod: state.paymentMethod,
       bumps: state.bumps.map((b) => ({ id: b.id, selected: b.selected })),
       customer: {
         name: form.name?.value || "",
-        email: form.email?.value || "",
-        phone: form.phone?.value || "",
-        documentType: form.documentType?.value || "CPF",
-        document: form.document?.value || "",
-        companyName: form.companyName?.value || ""
+        email: form.email?.value || ""
+        // Telefone e documento intencionalmente omitidos por LGPD/privacidade
       },
       utm: state.utm,
       ts: Date.now()
     };
 
-    localStorage.setItem("checkout_site_medico_draft", JSON.stringify(payload));
+    sessionStorage.removeItem(DRAFT_KEY); // limpa anterior antes de salvar
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(payload));
+
+    // Persiste rascunho no backend (email + bumps = suficiente para recuperação)
+    const saveDraftEndpoint = resolveEndpoint(config.endpoints?.saveDraft);
+    if (saveDraftEndpoint) {
+      fetch(saveDraftEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payload })
+      }).catch(() => {}); // silencioso — draft é best-effort
+    }
   }
 
   function loadDraft() {
-    const raw = localStorage.getItem("checkout_site_medico_draft");
+    const raw = sessionStorage.getItem(DRAFT_KEY);
     if (!raw) return;
 
     try {
       const draft = JSON.parse(raw);
+
+      // Descarta drafts com mais de 2 horas
+      if (draft.ts && Date.now() - draft.ts > 2 * 60 * 60 * 1000) {
+        sessionStorage.removeItem(DRAFT_KEY);
+        return;
+      }
+
       if (draft?.customer) {
-        form.name.value = draft.customer.name || "";
-        form.email.value = draft.customer.email || "";
-        form.phone.value = draft.customer.phone || "";
-        form.documentType.value = draft.customer.documentType || "CPF";
-        form.document.value = draft.customer.document || "";
-        form.companyName.value = draft.customer.companyName || "";
+        if (form.name) form.name.value = draft.customer.name || "";
+        if (form.email) form.email.value = draft.customer.email || "";
       }
 
       if (Array.isArray(draft?.bumps)) {
@@ -281,7 +449,9 @@
       }
 
       if (draft?.paymentMethod) {
-        const radio = form.querySelector(`input[name='paymentMethod'][value='${draft.paymentMethod}']`);
+        const radio = form.querySelector(
+          `input[name='paymentMethod'][value='${draft.paymentMethod}']`
+        );
         if (radio) radio.checked = true;
       }
 
@@ -289,12 +459,16 @@
       updatePaymentMethodUI();
       renderBumps();
       renderSummary();
-    } catch (err) {
-      console.warn("Falha ao carregar rascunho do checkout", err);
+    } catch (_) {
+      sessionStorage.removeItem(DRAFT_KEY);
     }
   }
 
+  // ─── Timer de sessão ──────────────────────────────────────────────────────────
+
   function startTimer() {
+    if (!topTimer) return;
+
     const tick = () => {
       state.timeLeft = Math.max(0, state.timeLeft - 1);
       const mm = String(Math.floor(state.timeLeft / 60)).padStart(2, "0");
@@ -302,7 +476,12 @@
       topTimer.textContent = `${mm}:${ss}`;
 
       if (state.timeLeft === 0) {
-        setStatus("Tempo promocional encerrado. Recarregue para reiniciar a sessão.", true);
+        setStatus(
+          "Tempo da sessão encerrado. <a href='checkout.html'>Clique aqui para reiniciar</a>.",
+          true
+        );
+        if (submitBtn) submitBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
       }
     };
 
@@ -313,6 +492,8 @@
     return String(value || "").replace(/\D/g, "");
   }
 
+  // ─── Submissão segura ─────────────────────────────────────────────────────────
+
   async function submitCheckout(e) {
     e.preventDefault();
 
@@ -322,6 +503,10 @@
       .filter((b) => b.selected)
       .map((b) => ({ product_id: b.id, quantity: 1, amount: b.price }));
 
+    // SEGURANÇA: Dados de cartão NUNCA são enviados em plaintext.
+    // Em produção, utilize Stripe.js (stripe.createPaymentMethod) ou
+    // MercadoPago.js (mp.createCardToken) para obter um token seguro.
+    // O token (nunca os dados brutos) é enviado ao backend.
     const payload = {
       customer: {
         name: form.name.value.trim(),
@@ -329,12 +514,12 @@
         phone: sanitizeDigits(form.phone.value),
         cpf: sanitizeDigits(form.document.value),
         documentType: form.documentType.value,
-        companyName: form.companyName.value.trim() || null
+        companyName: form.companyName?.value.trim() || null
       },
       amount: getTotal(),
       payment_method: state.paymentMethod,
       idempotencyKey: state.idempotencyKey,
-      installments: Number(form.installments.value || 1),
+      installments: Number(form.installments?.value || 1),
       order_bumps: selectedBumps,
       utm_params: {
         utm_source: state.utm.utm_source || null,
@@ -342,16 +527,8 @@
         utm_campaign: state.utm.utm_campaign || null,
         produto: state.utm.produto || null
       }
+      // cardData omitido intencionalmente — tokenização via SDK do gateway
     };
-
-    if (state.paymentMethod === "credit_card") {
-      payload.cardData = {
-        holder: form.cardHolder.value.trim(),
-        number: form.cardNumber.value.replace(/\s+/g, ""),
-        expiry: form.cardExpiry.value.trim(),
-        cvv: form.cardCvv.value.trim()
-      };
-    }
 
     const endpoint =
       state.paymentMethod === "apple_pay"
@@ -359,17 +536,24 @@
         : resolveEndpoint(config.gateways?.mercadopago?.endpoint);
 
     if (!endpoint) {
-      setStatus("Endpoint de pagamento não configurado.", true);
+      setStatus("Endpoint de pagamento não configurado. Tente novamente.", true);
       return;
     }
 
-    setStatus("Processando pagamento...", false);
+    // Desabilita botão para prevenir duplo clique
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Processando…";
+    }
+
+    setStatus("Processando seu pedido…", false);
 
     try {
-      track("PurchaseAttempt", {
+      track("purchase_attempt", {
         value: payload.amount,
         payment_method: payload.payment_method,
-        bumps_count: selectedBumps.length
+        bumps_count: selectedBumps.length,
+        currency: "BRL"
       });
 
       const res = await fetch(endpoint, {
@@ -381,34 +565,72 @@
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        throw new Error(data?.error || "Falha ao processar checkout");
+        throw new Error(data?.error || `Erro ${res.status} ao processar pedido`);
       }
 
-      track("Purchase", {
+      // Limpa sessão após compra confirmada
+      sessionStorage.removeItem(DRAFT_KEY);
+      sessionStorage.removeItem(IDEM_KEY);
+
+      track("purchase", {
         value: payload.amount,
-        order_id: data.order_id || data.orderId || "sem-id",
-        payment_method: payload.payment_method
+        order_id: data.order_id || data.orderId || "",
+        payment_method: payload.payment_method,
+        currency: "BRL"
       });
 
-      localStorage.removeItem("checkout_site_medico_draft");
+      const orderId = data.order_id || data.orderId || "";
       setStatus(
-        `Compra confirmada com sucesso.<br><strong>Pedido:</strong> ${
-          data.order_id || data.orderId || "gerado"
-        }<br>Nosso time enviará briefing e próximos passos no WhatsApp e email.`,
+        `✅ <strong>Compra confirmada!</strong><br>
+        Pedido <strong>${orderId}</strong> registrado.<br>
+        Nosso time entrará em contato via WhatsApp e email em até 1 hora para iniciar o briefing.`,
         false
       );
+
+      // Redireciona para página de obrigado se configurado
+      const successUrl = config.successUrl || "";
+      if (successUrl) {
+        setTimeout(() => {
+          window.location.href = successUrl + (orderId ? `?order_id=${orderId}` : "");
+        }, 3000);
+      }
     } catch (err) {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "CONFIRMAR COMPRA E INICIAR PROJETO";
+      }
       setStatus(
-        `Não foi possível finalizar automaticamente agora.<br><strong>Detalhe:</strong> ${err.message}<br><br>Seu rascunho foi salvo.`,
+        `❌ <strong>Não foi possível finalizar agora.</strong><br>
+        ${err.message}<br><br>
+        <a href="https://wa.me/5521979863949" target="_blank" rel="noopener noreferrer">
+          Fale conosco no WhatsApp
+        </a> e resolveremos imediatamente.`,
         true
       );
       saveDraft();
     }
   }
 
+  // ─── Eventos ──────────────────────────────────────────────────────────────────
+
   function bindEvents() {
     documentType.addEventListener("change", applyDocumentMask);
     documentInput.addEventListener("input", applyDocumentMask);
+
+    const cardNumberField = form.querySelector("input[name='cardNumber']");
+    const cardExpiryField = form.querySelector("input[name='cardExpiry']");
+    if (cardNumberField) cardNumberField.addEventListener("input", applyCardNumberMask);
+    if (cardExpiryField) cardExpiryField.addEventListener("input", applyCardExpiryMask);
+
+    // Validação inline on blur
+    const emailField = form.querySelector("input[name='email']");
+    if (emailField) {
+      emailField.addEventListener("blur", () => {
+        if (emailField.value && !isValidEmail(emailField.value)) {
+          showFieldError(emailField, "Email inválido");
+        }
+      });
+    }
 
     form.querySelectorAll("input[name='paymentMethod']").forEach((radio) => {
       radio.addEventListener("change", updatePaymentMethodUI);
@@ -437,9 +659,9 @@
     });
 
     form.addEventListener("submit", submitCheckout);
-    form.addEventListener("input", saveDraft);
-    form.addEventListener("change", saveDraft);
   }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────────
 
   function init() {
     fillInstallments();
@@ -452,7 +674,7 @@
     bindEvents();
     startTimer();
 
-    track("ViewContent", {
+    track("checkout_view", {
       product_name: config.product?.name,
       value: config.product?.basePrice || 0,
       currency: "BRL"

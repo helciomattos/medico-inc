@@ -1,46 +1,53 @@
 (function () {
+  "use strict";
+
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
+  // ─── Timer da oferta ──────────────────────────────────────────────────────────
+  // Usa sessionStorage para que o timer seja consistente entre renders/abas
+  // da mesma sessão, mas resete ao fechar o navegador.
   function initTimer() {
     const countdownEl = $("#countdown");
     if (!countdownEl) return;
 
-    const getEndOfDay = () => {
-      const now = new Date();
-      const end = new Date(now);
-      end.setHours(23, 59, 59, 999);
-      if (now > end) {
-        end.setDate(end.getDate() + 1);
-      }
-      return end.getTime();
-    };
+    const TIMER_KEY = "medico_inc_offer_end";
+    const SESSION_HOURS = 24; // oferta válida por 24h dentro da sessão
 
-    let end = getEndOfDay();
+    let end = Number(sessionStorage.getItem(TIMER_KEY) || 0);
+    if (!end || end <= Date.now()) {
+      // Novo visitante ou sessão expirada: define fim do dia corrente
+      const now = new Date();
+      const eod = new Date(now);
+      eod.setHours(23, 59, 59, 999);
+      end = eod.getTime();
+      sessionStorage.setItem(TIMER_KEY, String(end));
+    }
 
     const pad = (n) => String(n).padStart(2, "0");
 
     const render = () => {
-      let diff = Math.max(0, end - Date.now());
-      if (diff === 0) {
-        end = getEndOfDay();
-        diff = end - Date.now();
-      }
-
+      const diff = Math.max(0, end - Date.now());
       const total = Math.floor(diff / 1000);
       const h = Math.floor(total / 3600);
       const m = Math.floor((total % 3600) / 60);
       const s = total % 60;
       countdownEl.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+
+      if (diff === 0) {
+        countdownEl.closest(".top-ribbon")?.classList.add("expired");
+      }
     };
 
     render();
     setInterval(render, 1000);
   }
 
+  // ─── Efeito tilt nos cards ────────────────────────────────────────────────────
   function initTiltCards() {
-    const cards = $$(".tilt-card");
-    cards.forEach((card) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    $$(".tilt-card").forEach((card) => {
       card.addEventListener("pointermove", (e) => {
         const rect = card.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
@@ -55,6 +62,7 @@
     });
   }
 
+  // ─── Fluxo hero animado ───────────────────────────────────────────────────────
   function initHeroFlow() {
     const flow = $("#heroFlow");
     if (!flow) return;
@@ -73,7 +81,7 @@
     ];
 
     const state = { patients: 0, revenue: 0 };
-    const formatRevenue = (value) => `R$${Math.round(value).toLocaleString("pt-BR")}`;
+    const formatRevenue = (v) => `R$${Math.round(v).toLocaleString("pt-BR")}`;
     const render = () => {
       patientsEl.textContent = `+${Math.round(state.patients)}`;
       revenueEl.textContent = formatRevenue(state.revenue);
@@ -112,21 +120,21 @@
     setInterval(() => activate((current + 1) % steps.length), 2300);
   }
 
+  // ─── Benchmark ────────────────────────────────────────────────────────────────
   function initBenchmarkFlow() {
     const section = $("#benchmark");
     if (!section) return;
-
     const cards = $$(".bench-flow-card", section);
     if (!cards.length) return;
-
     cards.forEach((card, i) => card.classList.toggle("is-active", i === 0));
   }
 
+  // ─── Botões magnéticos ────────────────────────────────────────────────────────
   function initMagneticButtons() {
     if (window.matchMedia("(max-width: 960px)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const buttons = $$(".btn-primary");
-    buttons.forEach((btn) => {
+    $$(".btn-primary").forEach((btn) => {
       btn.addEventListener("pointermove", (e) => {
         const rect = btn.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -139,14 +147,17 @@
     });
   }
 
+  // ─── Scroll reveal ────────────────────────────────────────────────────────────
   function initTailorScrollEffect() {
     const targets = [$("#encontrabilidade"), $("#sites-entregues")].filter(Boolean);
     if (!targets.length) return;
 
     targets.forEach((el) => el.classList.add("tb-section-fx"));
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)
+    ) {
       targets.forEach((el) => el.classList.add("is-visible"));
       return;
     }
@@ -159,21 +170,19 @@
           observer.unobserve(entry.target);
         });
       },
-      {
-        threshold: 0.2,
-        rootMargin: "0px 0px -12% 0px"
-      }
+      { threshold: 0.2, rootMargin: "0px 0px -12% 0px" }
     );
 
-    targets.forEach((target) => observer.observe(target));
+    targets.forEach((t) => observer.observe(t));
   }
 
+  // ─── GSAP animations ─────────────────────────────────────────────────────────
   function initGsap() {
     if (!window.gsap) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-
     if (ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
     gsap.from(".hero-copy .kicker", { y: 20, opacity: 0, duration: 0.6, ease: "power2.out" });
@@ -189,12 +198,7 @@
         duration: 0.8,
         delay: i === 0 ? 0.05 : 0,
         ease: "power2.out",
-        scrollTrigger: ScrollTrigger
-          ? {
-              trigger: el,
-              start: "top 84%"
-            }
-          : undefined
+        scrollTrigger: ScrollTrigger ? { trigger: el, start: "top 84%" } : undefined
       });
     });
 
@@ -204,10 +208,7 @@
           y: 24,
           duration: 0.75,
           ease: "power2.out",
-          scrollTrigger: {
-            trigger: panel,
-            start: "top 75%"
-          }
+          scrollTrigger: { trigger: panel, start: "top 75%" }
         });
       });
 
@@ -216,7 +217,6 @@
         ".visual-block",
         ".find-card",
         ".platform-item",
-        ".specialty-grid span",
         ".live-card",
         ".checkout-copy",
         ".cart-box",
@@ -239,6 +239,7 @@
     }
   }
 
+  // ─── Init ─────────────────────────────────────────────────────────────────────
   initTimer();
   initTiltCards();
   initHeroFlow();
