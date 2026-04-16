@@ -239,7 +239,41 @@
     }
   }
 
+  // ─── Animated counters (proof bar) ─────────────────────────────────────────
+  function initCounters() {
+    const counters = $$("[data-count]");
+    if (!counters.length || !("IntersectionObserver" in window)) return;
+
+    const animate = (el) => {
+      const target = Number(el.getAttribute("data-count"));
+      const duration = 1200;
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+        el.textContent = Math.round(target * eased);
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target + "+";
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          animate(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    counters.forEach((c) => observer.observe(c));
+  }
+
   // ─── Init ─────────────────────────────────────────────────────────────────────
+  initCounters();
   initTimer();
   initTiltCards();
   initHeroFlow();
