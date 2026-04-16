@@ -216,6 +216,7 @@
         ".bench-flow-card",
         ".visual-block",
         ".find-card",
+        ".advertorial-shot",
         ".platform-item",
         ".live-card",
         ".checkout-copy",

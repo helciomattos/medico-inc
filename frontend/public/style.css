@@ -998,6 +998,7 @@ p {
 .loss-grid,
 .benchmark,
 .findability,
+.press-advertorials,
 .platform-trust,
 .specialties,
 .visual-models,
@@ -1019,6 +1020,7 @@ p {
 .loss-grid header h2,
 .benchmark h2,
 .findability h2,
+.press-advertorials h2,
 .platform-trust h2,
 .specialties h2,
 .visual-models h2,
@@ -1524,6 +1526,205 @@ p {
   transform: translateY(-4px);
   border-color: #9ab5ca;
   box-shadow: 0 16px 28px rgba(18, 33, 48, 0.1);
+}
+
+/* --- Press advertorial shots (referencias editoriais, estilo captura) --- */
+
+.press-advertorials-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+.press-advertorials-lead {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.press-advertorial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.advertorial-shot {
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(24, 55, 78, 0.12);
+  box-shadow: 0 12px 40px rgba(16, 40, 59, 0.1);
+  background: #f4f6f8;
+}
+
+.advertorial-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.advertorial-chrome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #e8ecf0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.advertorial-dots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.advertorial-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c5cdd6;
+}
+
+.advertorial-dots span:first-child {
+  background: #e08b7e;
+}
+
+.advertorial-dots span:nth-child(2) {
+  background: #e6c46c;
+}
+
+.advertorial-dots span:nth-child(3) {
+  background: #7bc98f;
+}
+
+.advertorial-url {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.72rem;
+  font-family: ui-monospace, monospace;
+  color: #5a6b78;
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.advertorial-card-body {
+  padding: 22px 22px 20px;
+  background: #fff;
+  position: relative;
+}
+
+.advertorial-card-body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 3px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, #0ab8a6, #0a7f75);
+}
+
+.advertorial-card-body--host::before {
+  background: linear-gradient(180deg, #ff7900, #e05a00);
+}
+
+.advertorial-outlet {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #3a4d5c;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.advertorial-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: #0ab8a6;
+  color: #fff;
+}
+
+.advertorial-pill--host {
+  background: #ff7900;
+}
+
+.advertorial-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #0a7f75;
+  margin: 0 0 10px;
+}
+
+.advertorial-card-body--host .advertorial-tag {
+  color: #c45a00;
+}
+
+.advertorial-headline {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.advertorial-dek {
+  margin: 0 0 18px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #4b5b69;
+}
+
+.advertorial-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #0a6b8c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.advertorial-cta:hover {
+  color: #054a63;
+}
+
+.advertorial-card-body--host .advertorial-cta {
+  color: #c75400;
+}
+
+.advertorial-ext {
+  font-size: 0.85em;
+  opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .press-advertorial-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .platform-grid {
