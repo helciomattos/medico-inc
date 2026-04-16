@@ -392,6 +392,21 @@ select:focus {
   font-weight: 800;
 }
 
+.summary-pix-hint {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e8faf6, #f0fffc);
+  border: 1px solid #9dd9cc;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: #1a4d44;
+}
+
+.summary-pix-hint strong {
+  color: #0a6b5f;
+}
+
 .price-strike {
   text-decoration: line-through;
   color: #8b9aa8;
