@@ -4283,6 +4283,11 @@ details summary:focus-visible {
   margin: 0 2px -4px;
 }
 
+.ai-logo-gemini-card {
+  height: 30px;
+  margin: 0 2px -5px;
+}
+
 .how-step-icon .ai-logo-inline {
   height: 36px;
   margin: 0;
