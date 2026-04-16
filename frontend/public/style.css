@@ -1508,6 +1508,10 @@ p {
   gap: 12px;
 }
 
+.platform-trust h2 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
 .platform-trust header p:last-child {
   margin-top: 10px;
   color: #4f5f70;
@@ -3897,4 +3901,26 @@ details summary:focus-visible {
   .viga-clients-image.mobile-only {
     display: block;
   }
+}
+
+/* ── AI / brand logos inline ─────────────────────────────────────────────── */
+.ai-logo-inline {
+  height: 18px;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 3px -1px;
+  display: inline;
+}
+
+.how-step-icon .ai-logo-inline {
+  height: 36px;
+  margin: 0;
+}
+
+.doctoralia-logo {
+  height: 22px;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 3px -2px;
+  display: inline;
 }
