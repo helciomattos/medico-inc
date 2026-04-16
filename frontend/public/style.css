@@ -1936,6 +1936,34 @@ p {
   font-size: 0.82rem;
 }
 
+.live-preview-images {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.live-preview-desktop {
+  flex: 1;
+  width: 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  object-position: top;
+  max-height: 420px;
+}
+
+.live-preview-mobile {
+  width: 120px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  object-position: top;
+  max-height: 420px;
+}
+
 .proof-metrics {
   margin-top: 20px;
   display: grid;
