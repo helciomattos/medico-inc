@@ -515,20 +515,20 @@ p {
 }
 
 .how-step-card {
-  border: 1px solid rgba(155, 200, 230, 0.16);
+  border: 1px solid var(--line);
   border-radius: 18px;
   padding: 28px 24px 24px;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(6px);
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 18px rgba(16, 40, 59, 0.05);
 }
 
 .how-step-card:hover {
-  border-color: rgba(10, 184, 166, 0.45);
-  background: rgba(10, 184, 166, 0.05);
+  border-color: #9dc6bc;
+  box-shadow: 0 8px 28px rgba(10, 127, 117, 0.12);
   transform: translateY(-3px);
 }
 
@@ -557,17 +557,17 @@ p {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #6bd4c5;
+  color: #0a8f7a;
 }
 
 .how-step-card h3 {
-  color: #f5f9ff;
+  color: var(--ink);
   font-size: 1.18rem;
   line-height: 1.18;
 }
 
 .how-step-card p {
-  color: #b7c8d8;
+  color: var(--muted);
   line-height: 1.55;
   font-size: 1.04rem;
 }
@@ -580,9 +580,9 @@ p {
   margin-top: 6px;
   font-size: 0.72rem;
   font-weight: 600;
-  color: #6bd4c5;
-  background: rgba(107, 212, 197, 0.1);
-  border: 1px solid rgba(107, 212, 197, 0.32);
+  color: #0a6f65;
+  background: rgba(10, 143, 122, 0.08);
+  border: 1px solid rgba(10, 143, 122, 0.22);
   border-radius: 999px;
   padding: 6px 12px;
 }
