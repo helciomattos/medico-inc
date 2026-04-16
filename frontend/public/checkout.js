@@ -59,7 +59,7 @@
   const state = {
     step: 1,
     timeLeft: 15 * 60,
-    bumps: (config.orderBumps || []).map((b) => ({ ...b, selected: !!b.selectedByDefault })),
+    bumps: (config.orderBumps || []).map((b) => ({ ...b, selected: false })),
     paymentMethod: "credit_card",
     idempotencyKey,
     utm: Object.fromEntries(new URLSearchParams(window.location.search).entries())
@@ -443,12 +443,7 @@
         if (form.email) form.email.value = draft.customer.email || "";
       }
 
-      if (Array.isArray(draft?.bumps)) {
-        state.bumps = state.bumps.map((b) => {
-          const found = draft.bumps.find((x) => x.id === b.id);
-          return found ? { ...b, selected: !!found.selected } : b;
-        });
-      }
+      // Não restaurar seleção de order bumps do rascunho — sempre começar sem adicionais no carrinho.
 
       if (draft?.paymentMethod) {
         const radio = form.querySelector(
