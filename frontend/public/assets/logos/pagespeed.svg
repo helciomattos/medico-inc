@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <circle cx="24" cy="24" r="22" fill="#4285F4"/>
+  <path d="M24 8c8.8 0 16 7.2 16 16s-7.2 16-16 16S8 32.8 8 24 15.2 8 24 8z" fill="#fff"/>
+  <path d="M24 12c6.6 0 12 5.4 12 12s-5.4 12-12 12S12 30.6 12 24s5.4-12 12-12z" fill="#4285F4"/>
+  <path d="M24 16c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8z" fill="#fff"/>
+  <path d="M30 18l-8 4-2 8 8-4 2-8z" fill="#34A853"/>
+  <path d="M22 22l4-2-1 4-3-2z" fill="#4285F4"/>
+  <!-- Speedometer needle -->
+  <line x1="24" y1="24" x2="31" y2="17" stroke="#EA4335" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

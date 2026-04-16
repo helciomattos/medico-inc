@@ -340,6 +340,53 @@
     });
   }
 
+  // ─── Performance score ring animation ────────────────────────────────────────
+  function initPerfScores() {
+    const CIRCUMFERENCE = 2 * Math.PI * 32; // r=32
+
+    function animateRing(ring) {
+      const fills = ring.querySelectorAll(".score-fill");
+      const numEl = ring.querySelector(".score-num");
+      const target = parseInt(ring.dataset.score || 100, 10);
+      const duration = 1400;
+      const start = performance.now();
+
+      fills.forEach(f => {
+        f.style.strokeDasharray = CIRCUMFERENCE;
+        f.style.strokeDashoffset = CIRCUMFERENCE;
+      });
+      if (numEl) numEl.textContent = "0";
+
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(eased * target);
+        const offset = CIRCUMFERENCE - (eased * target / 100) * CIRCUMFERENCE;
+
+        fills.forEach(f => { f.style.strokeDashoffset = offset; });
+        if (numEl) numEl.textContent = value;
+
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const rings = $$(".score-ring[data-score]");
+    if (!rings.length) return;
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateRing(e.target);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    rings.forEach(r => obs.observe(r));
+  }
+
   // ─── Init ─────────────────────────────────────────────────────────────────────
   initCounters();
   initTimer();
@@ -351,4 +398,5 @@
   initGsap();
   initGA4Tracking();
   initPageTransition();
+  initPerfScores();
 })();

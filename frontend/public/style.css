@@ -4300,3 +4300,150 @@ details summary:focus-visible {
   margin: 0 3px -2px;
   display: inline;
 }
+
+/* ── Performance Score Section ──────────────────────────────────────────────── */
+.perf-score {
+  padding: 80px 0;
+}
+
+.perf-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 52px;
+}
+
+.perf-lead {
+  color: var(--muted);
+  margin-top: 14px;
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.perf-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.perf-tool-card {
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  box-shadow: 0 6px 32px rgba(19, 33, 45, 0.06);
+}
+
+.perf-tool-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.perf-tool-head span {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.perf-tool-logo {
+  height: 36px;
+  width: auto;
+}
+
+.perf-tool-logo--gtmetrix {
+  height: 28px;
+}
+
+.perf-scores {
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.perf-score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* Ring */
+.score-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.score-svg {
+  width: 80px;
+  height: 80px;
+  transform: rotate(-90deg);
+}
+
+.score-track {
+  fill: none;
+  stroke: #e8ede6;
+  stroke-width: 6;
+}
+
+.score-fill {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 201.06;
+  stroke-dashoffset: 201.06;
+  transition: stroke-dashoffset 0.05s linear;
+}
+
+.score-fill--green { stroke: #0cce6b; }
+.score-fill--orange { stroke: #ffa400; }
+.score-fill--red { stroke: #ff4e42; }
+
+.score-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+/* GTmetrix grade letter */
+.gtmetrix-grade {
+  background: linear-gradient(135deg, #0cce6b, #09a354);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-grade {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: #fff;
+  line-height: 1;
+}
+
+@media (max-width: 720px) {
+  .perf-tools {
+    grid-template-columns: 1fr;
+  }
+}
