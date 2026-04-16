@@ -270,7 +270,7 @@ select:focus {
 .payment-methods {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 8px;
 }
 
@@ -293,18 +293,6 @@ select:focus {
   border-color: #87baaf;
   background: #ebf9f5;
   color: #13475b;
-}
-
-.gateway-pill {
-  margin-top: 10px;
-  border-radius: 999px;
-  border: 1px solid #c7d7d3;
-  background: #f5f9f8;
-  padding: 8px 11px;
-  display: inline-flex;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: #3b5263;
 }
 
 .payment-fields,

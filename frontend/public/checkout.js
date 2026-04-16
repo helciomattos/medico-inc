@@ -93,6 +93,7 @@
   const creditCardFields = document.getElementById("creditCardFields");
   const pixFields = document.getElementById("pixFields");
   const applePayFields = document.getElementById("applePayFields");
+  const applePayOption = document.getElementById("applePayOption");
 
   // ─── Utilitários ─────────────────────────────────────────────────────────────
 
@@ -262,12 +263,39 @@
     field.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
   }
 
+  function isApplePayAvailable() {
+    if (typeof window.ApplePaySession === "undefined") return false;
+    try {
+      return window.ApplePaySession.canMakePayments();
+    } catch {
+      return false;
+    }
+  }
+
+  /** Exibe Apple Pay só em dispositivos compatíveis; roda no carregamento da página. */
+  function initApplePayVisibility() {
+    if (!applePayOption) return;
+    const available = isApplePayAvailable();
+    if (available) {
+      applePayOption.classList.remove("hidden");
+    } else {
+      applePayOption.classList.add("hidden");
+      const radio = applePayOption.querySelector("input[value='apple_pay']");
+      if (radio?.checked) {
+        const cc = form.querySelector("input[name='paymentMethod'][value='credit_card']");
+        if (cc) cc.checked = true;
+        state.paymentMethod = "credit_card";
+      }
+    }
+  }
+
   function updatePaymentMethodUI() {
     const selected =
       form.querySelector("input[name='paymentMethod']:checked")?.value || "credit_card";
     state.paymentMethod = selected;
 
     document.querySelectorAll(".pay-option").forEach((el) => {
+      if (el.classList.contains("hidden")) return;
       const radio = el.querySelector("input");
       el.classList.toggle("is-active", radio && radio.value === selected);
     });
@@ -449,7 +477,15 @@
         const radio = form.querySelector(
           `input[name='paymentMethod'][value='${draft.paymentMethod}']`
         );
-        if (radio) radio.checked = true;
+        const isAppleDraft = draft.paymentMethod === "apple_pay";
+        const appleRowVisible =
+          applePayOption && !applePayOption.classList.contains("hidden");
+        if (radio && (!isAppleDraft || appleRowVisible)) {
+          radio.checked = true;
+        } else {
+          const cc = form.querySelector("input[name='paymentMethod'][value='credit_card']");
+          if (cc) cc.checked = true;
+        }
       }
 
       applyDocumentMask();
@@ -661,6 +697,7 @@
   // ─── Init ─────────────────────────────────────────────────────────────────────
 
   function init() {
+    initApplePayVisibility();
     fillInstallments();
     renderBumps();
     renderSummary();
