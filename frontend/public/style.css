@@ -4176,7 +4176,7 @@ details summary:focus-visible {
 
 .viga-clients-image {
   display: block;
-  width: 100%;
+  width: 50%;
   height: auto;
   opacity: 0.95;
 }
@@ -4231,6 +4231,7 @@ details summary:focus-visible {
 
   .viga-clients-image.mobile-only {
     display: block;
+    width: 100%;
   }
 }
 
