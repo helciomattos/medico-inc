@@ -1703,7 +1703,7 @@ p {
 .visual-models {
   margin-top: 88px;
   padding: clamp(24px, 4.6vw, 58px) 0;
-  background: radial-gradient(circle at 0% 0%, #26384a, #141d27 58%, #111923 100%);
+  background: transparent;
 }
 
 .visual-models .container {
@@ -1716,10 +1716,11 @@ p {
   grid-template-columns: 0.9fr 1.1fr;
   gap: 18px;
   align-items: center;
-  border: 1px solid rgba(184, 206, 228, 0.2);
+  border: 1px solid var(--line);
   border-radius: 24px;
   padding: clamp(16px, 2.2vw, 28px);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(16, 40, 59, 0.06);
 }
 
 .visual-block.reverse {
@@ -1727,26 +1728,27 @@ p {
 }
 
 .visual-copy .kicker {
-  color: #8de3ff;
+  color: #0f7d95;
 }
 
 .visual-copy h2 {
-  color: #f3f8ff;
+  color: var(--ink);
   font-size: clamp(1.8rem, 3.8vw, 3rem);
 }
 
 .visual-copy p {
   margin-top: 10px;
-  color: #bfccdb;
+  color: var(--muted);
   max-width: 44ch;
-  line-height: 1.52;
+  line-height: 1.6;
+  font-size: 1.08rem;
 }
 
 .visual-copy .btn {
   margin-top: 16px;
-  border-color: rgba(177, 199, 217, 0.4);
-  color: #dce8f5;
-  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--line);
+  color: var(--ink);
+  background: #ffffff;
 }
 
 .visual-stage {
