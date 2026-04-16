@@ -3218,6 +3218,297 @@ details summary:focus-visible {
 /*  SPECIALTY GALLERY — mockups iPhone por especialidade                    */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  IPHONE GALLERY — mockups realistas por especialidade                      */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.iphone-gallery {
+  padding: 72px 0 56px;
+}
+
+.iphone-gallery-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.iphone-gallery-header h2 {
+  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+}
+
+.iphone-gallery-header p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.iphone-track {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.iphone-phone {
+  flex-shrink: 0;
+}
+
+.iphone-frame {
+  position: relative;
+  width: 200px;
+  height: 400px;
+  background: #111318;
+  border-radius: 36px;
+  padding: 10px;
+  box-shadow:
+    0 0 0 2px #1e2230,
+    0 0 0 3px #0d1018,
+    0 28px 56px rgba(0, 0, 0, 0.28),
+    0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.iphone-notch {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 20px;
+  background: #05070c;
+  border-radius: 0 0 14px 14px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.iphone-notch::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0d1018;
+  border: 1.5px solid #1a1e28;
+}
+
+.iphone-notch::after {
+  content: "";
+  width: 28px;
+  height: 5px;
+  border-radius: 4px;
+  background: #0d1018;
+}
+
+.iphone-screen {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.ps-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 9px 5px;
+}
+
+.ps-brand {
+  font-size: 0.38rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  color: #1a2840;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.ps-ham {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+  justify-content: center;
+}
+
+.ps-ham span {
+  display: block;
+  width: 12px;
+  height: 1.2px;
+  background: #2a3a4a;
+  border-radius: 1px;
+}
+
+.ps-hero {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 14px 10px 14px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(165deg, var(--ps-a, #2f7cff), var(--ps-b, #1c4fb6));
+}
+
+.ps-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 75% 8%, rgba(255,255,255,0.2), transparent 38%),
+    radial-gradient(circle at 20% 85%, rgba(255,255,255,0.08), transparent 45%);
+  pointer-events: none;
+}
+
+.ps-photo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255,255,255,0.88), rgba(255,255,255,0.42) 52%, transparent 58%),
+    linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.1));
+  border: 2.5px solid rgba(255,255,255,0.6);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 8px;
+}
+
+.ps-photo::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64%;
+  height: 36%;
+  border-radius: 50% 50% 0 0;
+  background: rgba(255,255,255,0.38);
+}
+
+.ps-name {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.12;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
+.ps-spec {
+  font-size: 0.4rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 0.84;
+  position: relative;
+  z-index: 1;
+  margin: 4px 0 0;
+}
+
+.ps-line {
+  font-size: 0.52rem;
+  line-height: 1.35;
+  opacity: 0.92;
+  max-width: 22ch;
+  position: relative;
+  z-index: 1;
+  margin: 6px 0 0;
+}
+
+.ps-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #25d366;
+  color: #fff;
+  font-size: 0.44rem;
+  font-weight: 700;
+  padding: 5px 9px;
+  border-radius: 999px;
+  margin-top: 9px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(37,211,102,0.32);
+}
+
+.ps-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  background: #fff;
+  padding: 8px 9px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ps-bottom-label {
+  font-size: 0.36rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8899aa;
+  margin: 0;
+}
+
+.ps-chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ps-chips span {
+  background: #f2f5f8;
+  border: 1px solid #dde4ec;
+  border-radius: 4px;
+  font-size: 0.38rem;
+  font-weight: 600;
+  color: #3a4c5c;
+  padding: 2px 6px;
+}
+
+.spec-derma  .ps-hero { --ps-a: #f7779a; --ps-b: #c2355a; }
+.spec-ofta   .ps-hero { --ps-a: #4f8ef7; --ps-b: #1a3cbf; }
+.spec-gineco .ps-hero { --ps-a: #b57bee; --ps-b: #6d23c9; }
+.spec-cardio .ps-hero { --ps-a: #ef5350; --ps-b: #a91515; }
+.spec-orto   .ps-hero { --ps-a: #1ab8c8; --ps-b: #0b6d80; }
+
+@media (max-width: 1120px) {
+  .iphone-track { gap: 14px; }
+  .iphone-frame { width: 170px; height: 340px; }
+}
+
+@media (max-width: 720px) {
+  .iphone-track {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .iphone-frame { width: 160px; height: 320px; }
+}
+
 .specialty-gallery {
   padding: 72px 0 48px;
   position: relative;
