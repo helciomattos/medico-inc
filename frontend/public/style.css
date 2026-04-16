@@ -1230,9 +1230,10 @@ p {
 }
 
 .pix-logo-inline {
-  height: 16px;
+  height: 18px;
   width: auto;
-  opacity: 0.85;
+  opacity: 0.9;
+  filter: brightness(0) invert(1);
 }
 
 .cards-4 {
