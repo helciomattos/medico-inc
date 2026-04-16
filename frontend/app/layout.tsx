@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Médico INC — Sites para Médicos e Clínicas",
+  title: "Site Médico em 2 Dias | Médico INC",
   description:
-    "Site médico de alta conversão publicado em até 2 dias por R$497. Mais pacientes, mais faturamento.",
+    "Site médico de alta conversão para médicos e clínicas, publicado em até 2 dias. Mais pacientes e faturamento. Médico INC.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
