@@ -2083,6 +2083,12 @@ p {
   font-size: 0.82rem;
 }
 
+.pix-alt {
+  margin-top: -4px;
+  font-size: 0.95rem;
+  color: #a8d8c8;
+}
+
 .faq header {
   margin-bottom: 16px;
 }
