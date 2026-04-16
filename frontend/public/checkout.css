@@ -359,6 +359,35 @@ select:focus {
   font-weight: 800;
 }
 
+.price-strike {
+  text-decoration: line-through;
+  color: #8b9aa8;
+  font-weight: 500;
+}
+
+.line.discount-line {
+  color: #0a8f5a;
+}
+
+.line.discount-line strong {
+  color: #0a8f5a;
+  font-weight: 700;
+}
+
+.checkout-launch-badge {
+  display: inline-block;
+  margin: 10px 0 0;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #10b981, #0a8f5a);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(10, 143, 90, 0.28);
+}
+
 .checkout-summary ul {
   margin: 10px 0 0;
   padding-left: 18px;
