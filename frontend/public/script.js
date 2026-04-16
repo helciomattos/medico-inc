@@ -253,7 +253,7 @@
         const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
         el.textContent = Math.round(target * eased);
         if (progress < 1) requestAnimationFrame(tick);
-        else el.textContent = target + "+";
+        else el.textContent = "+" + target;
       };
       requestAnimationFrame(tick);
     };
