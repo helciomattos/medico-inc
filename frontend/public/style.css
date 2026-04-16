@@ -25,7 +25,10 @@ body {
   padding: 0;
   background: linear-gradient(180deg, var(--bg), var(--bg-2));
   color: var(--ink);
-  font-family: "Manrope", sans-serif;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
@@ -59,8 +62,11 @@ main,
 h1,
 h2,
 h3 {
-  font-family: "Syne", sans-serif;
-  line-height: 1.05;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
   margin: 0;
 }
 
@@ -110,7 +116,7 @@ p {
 
 .site-brand-name {
   display: grid;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-weight: 800;
   letter-spacing: 0.02em;
   font-size: clamp(0.62rem, 0.86vw, 0.76rem);
@@ -135,7 +141,7 @@ p {
   text-decoration: none;
   border-radius: 999px;
   padding: 12px 18px;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -163,7 +169,7 @@ p {
 
 .top-buy {
   text-decoration: none;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -243,7 +249,7 @@ p {
   appearance: none;
   border: 0;
   text-decoration: none;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-weight: 700;
   letter-spacing: 0.01em;
   font-size: 0.99rem;
@@ -369,7 +375,7 @@ p {
 
 .hero-stage-metrics strong {
   display: block;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.15rem;
   color: #153248;
 }
@@ -452,7 +458,7 @@ p {
 .hero-flow-head strong {
   margin-top: 6px;
   display: block;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1rem;
   color: #1e3549;
 }
@@ -543,7 +549,7 @@ p {
 
 .hero-flow-results span {
   display: block;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.35rem;
   color: #0f3449;
 }
@@ -678,7 +684,7 @@ p {
 }
 
 .cart-total strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.7rem;
 }
 
@@ -1284,7 +1290,7 @@ p {
   padding: 8px 12px;
   background: linear-gradient(130deg, #08b7a5, #0e87ba);
   color: #fff;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 0.8rem;
   font-weight: 700;
 }
@@ -1316,7 +1322,7 @@ p {
 .stats-mini strong {
   display: block;
   color: #0f3046;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
 }
 
 .stats-mini span {
@@ -1432,7 +1438,7 @@ p {
 }
 
 .proof-metrics strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.6rem;
   color: #14354a;
 }
@@ -2080,7 +2086,7 @@ details summary:focus-visible {
 }
 
 .proof-bar-inner strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 2rem;
   font-weight: 800;
   color: #0ab8a6;
@@ -2135,7 +2141,7 @@ details summary:focus-visible {
 
 .problem-stat {
   display: block;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 3rem;
   font-weight: 800;
   color: #0ab8a6;
@@ -2310,7 +2316,7 @@ details summary:focus-visible {
   border-radius: 999px;
   background: linear-gradient(135deg, #0a7d72, #0ab8a6);
   color: #fff;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.4rem;
   font-weight: 800;
   display: flex;
@@ -2374,7 +2380,7 @@ details summary:focus-visible {
 .pricing-table thead th {
   background: #0f2232;
   color: #eef8ff;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-weight: 700;
   font-size: 0.85rem;
   letter-spacing: 0.04em;
@@ -2435,7 +2441,7 @@ details summary:focus-visible {
 .market-total {
   color: #8b2d2d;
   font-weight: 800;
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.1rem;
   text-decoration: line-through;
 }
@@ -2445,7 +2451,7 @@ details summary:focus-visible {
 }
 
 .included-total strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
   font-size: 1.6rem;
   display: block;
 }
@@ -2620,5 +2626,494 @@ details summary:focus-visible {
 
   .domain-step {
     padding: 22px 18px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  CAPABILITIES SHOWCASE — skills list + MacBook mockups                    */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.capabilities-showcase {
+  margin-top: 88px;
+  padding: 96px 0 104px;
+  background:
+    radial-gradient(circle at 85% 18%, rgba(10, 184, 166, 0.18), transparent 45%),
+    radial-gradient(circle at 12% 85%, rgba(15, 125, 149, 0.22), transparent 48%),
+    linear-gradient(170deg, #060912, #0a1320 55%, #070c16);
+  color: #edf4ff;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(155, 200, 230, 0.08);
+  border-bottom: 1px solid rgba(155, 200, 230, 0.08);
+}
+
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 72px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.capabilities-left .kicker {
+  color: #6bd4c5;
+}
+
+.capabilities-left h2 {
+  color: #f5f9ff;
+  font-size: clamp(2rem, 3.8vw, 3.1rem);
+  line-height: 1.05;
+  margin-bottom: 22px;
+  max-width: 18ch;
+}
+
+.capabilities-left h2 em {
+  color: #6bd4c5;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.capabilities-lead {
+  color: #b7c8d8;
+  line-height: 1.62;
+  font-size: 1.02rem;
+  max-width: 52ch;
+  margin-bottom: 32px;
+}
+
+.capabilities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 36px 0;
+  display: grid;
+  gap: 16px;
+}
+
+.capabilities-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 1.1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(155, 200, 230, 0.12);
+}
+
+.cap-label {
+  color: #dae7f3;
+  font-weight: 500;
+  font-size: 0.96rem;
+  letter-spacing: -0.005em;
+}
+
+.cap-bar {
+  height: 6px;
+  background: rgba(155, 200, 230, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cap-fill {
+  display: block;
+  height: 100%;
+  width: var(--p, 100%);
+  background: linear-gradient(90deg, #0ab8a6, #6bd4c5);
+  border-radius: 999px;
+  box-shadow: 0 0 18px rgba(10, 184, 166, 0.35);
+  transform-origin: left center;
+  animation: cap-fill-grow 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cap-fill-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.cap-value {
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 600;
+  color: #6bd4c5;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  min-width: 3ch;
+  text-align: right;
+}
+
+.capabilities-cta {
+  display: inline-flex;
+  box-shadow: 0 12px 40px rgba(10, 184, 166, 0.32);
+}
+
+/* ── MacBook mockups (pure CSS frame) ──────────────────────────────────── */
+
+.capabilities-right {
+  position: relative;
+  display: grid;
+  gap: 28px;
+  padding: 8px;
+}
+
+.macbook-glow {
+  position: absolute;
+  inset: auto -20% -10% -10%;
+  height: 70%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(10, 184, 166, 0.28),
+    transparent 60%
+  );
+  filter: blur(50px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.macbook-mockup {
+  position: relative;
+  margin: 0;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.macbook-top {
+  transform: rotate(-1.2deg) translateX(-14px);
+}
+
+.macbook-bottom {
+  transform: rotate(1.4deg) translateX(18px);
+}
+
+.macbook-top:hover,
+.macbook-bottom:hover {
+  transform: rotate(0deg) translateX(0);
+}
+
+.macbook-screen {
+  position: relative;
+  background: #0b0f18;
+  border-radius: 14px 14px 4px 4px;
+  padding: 22px 14px 14px;
+  box-shadow:
+    0 0 0 2px #1a1e28,
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    0 40px 80px rgba(10, 184, 166, 0.08);
+  border: 1px solid rgba(155, 200, 230, 0.08);
+}
+
+.macbook-notch {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 10px;
+  background: #05070c;
+  border-radius: 0 0 8px 8px;
+  z-index: 2;
+}
+
+.macbook-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  aspect-ratio: 16 / 10;
+}
+
+.macbook-base {
+  position: relative;
+  width: 112%;
+  height: 14px;
+  margin: -2px auto 0;
+  background: linear-gradient(
+    180deg,
+    #20242e 0%,
+    #14171f 50%,
+    #0c0e14 100%
+  );
+  border-radius: 0 0 14px 14px;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.macbook-base::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22%;
+  height: 4px;
+  background: #0a0c12;
+  border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 1120px) {
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  .capabilities-left h2 {
+    max-width: 100%;
+  }
+
+  .macbook-top,
+  .macbook-bottom {
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .capabilities-showcase {
+    margin-top: 64px;
+    padding: 64px 0 72px;
+  }
+
+  .capabilities-list li {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label value"
+      "bar bar";
+    gap: 6px 12px;
+    padding-bottom: 14px;
+  }
+
+  .cap-label { grid-area: label; }
+  .cap-value { grid-area: value; }
+  .cap-bar { grid-area: bar; }
+
+  .capabilities-cta {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .capabilities-right {
+    gap: 22px;
+  }
+
+  .macbook-screen {
+    padding: 16px 10px 10px;
+    border-radius: 10px 10px 3px 3px;
+  }
+
+  .macbook-notch {
+    width: 44px;
+    height: 7px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  VIGA ABOUT — seção institucional do Grupo VIGA                          */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.viga-about {
+  margin-top: 88px;
+  padding: 88px 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(10, 184, 166, 0.14), transparent 42%),
+    radial-gradient(circle at 85% 80%, rgba(14, 87, 152, 0.18), transparent 42%),
+    linear-gradient(165deg, #0a0f17, #0d1622 55%, #0b141f);
+  color: #edf4ff;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(155, 200, 230, 0.08);
+  border-bottom: 1px solid rgba(155, 200, 230, 0.08);
+}
+
+.viga-about .container {
+  position: relative;
+  z-index: 1;
+}
+
+.viga-about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.viga-about .kicker {
+  color: #6bd4c5;
+}
+
+.viga-about-left h2 {
+  color: #f5f9ff;
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  line-height: 1.08;
+  max-width: 15ch;
+  margin-bottom: 24px;
+}
+
+.viga-about-left p {
+  color: #b7c8d8;
+  line-height: 1.62;
+  margin-top: 14px;
+  max-width: 52ch;
+}
+
+.viga-lead {
+  font-size: 1.05rem;
+}
+
+.viga-about strong {
+  color: #fff;
+  font-weight: 800;
+}
+
+.viga-about em {
+  color: #9bf0e2;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.viga-address {
+  margin-top: 30px;
+  padding: 20px 22px;
+  border: 1px solid rgba(155, 200, 230, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  max-width: 440px;
+}
+
+.kicker-mini {
+  font-family: "Inter", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: #6bd4c5;
+  font-weight: 800;
+  margin: 0 0 10px 0 !important;
+}
+
+.viga-address p {
+  margin: 0 !important;
+  line-height: 1.52;
+  color: #dae7f3 !important;
+  font-size: 0.92rem;
+  max-width: none !important;
+}
+
+.viga-address p.viga-address-line-1 {
+  font-weight: 700;
+  color: #fff !important;
+}
+
+.viga-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.viga-pillar {
+  border: 1px solid rgba(155, 200, 230, 0.18);
+  border-radius: 14px;
+  padding: 22px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  text-align: center;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.viga-pillar:hover {
+  border-color: rgba(10, 184, 166, 0.4);
+  background: rgba(10, 184, 166, 0.06);
+  transform: translateY(-2px);
+}
+
+.pillar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(107, 212, 197, 0.4);
+  background: rgba(107, 212, 197, 0.08);
+  color: #6bd4c5;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.viga-pillar h3 {
+  font-size: 1.02rem;
+  color: #f5f9ff;
+  margin-bottom: 8px;
+  font-family: "Fraunces", "Instrument Serif", Georgia, serif;
+}
+
+.viga-pillar p {
+  color: #a8bdd0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.viga-clients {
+  border-top: 1px solid rgba(155, 200, 230, 0.12);
+  padding-top: 24px;
+}
+
+.viga-clients-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.95;
+}
+
+.viga-clients-image.mobile-only {
+  display: none;
+}
+
+@media (max-width: 1120px) {
+  .viga-about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .viga-about-left h2 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .viga-about {
+    margin-top: 64px;
+    padding: 56px 0;
+  }
+
+  .viga-pillars {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .viga-pillar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    padding: 16px 18px;
+  }
+
+  .pillar-icon {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .viga-pillar > div {
+    flex: 1;
+  }
+
+  .viga-clients-image.desktop-only {
+    display: none;
+  }
+
+  .viga-clients-image.mobile-only {
+    display: block;
   }
 }
