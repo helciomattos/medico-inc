@@ -71,7 +71,7 @@
               </label>
               <label>
                 <span id="documentLabel">CPF</span>
-                <input type="text" name="document" id="document" required placeholder="000.000.000-00" />
+                <input type="text" name="document" id="document" required placeholder="000.000.000-00" inputmode="numeric" />
               </label>
               <label>
                 Nome da clínica (opcional)
@@ -124,15 +124,15 @@
               </label>
               <label>
                 Número do cartão
-                <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000" />
+                <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000" inputmode="numeric" autocomplete="cc-number" />
               </label>
               <label>
                 Validade
-                <input type="text" name="cardExpiry" placeholder="MM/AA" />
+                <input type="text" name="cardExpiry" placeholder="MM/AA" inputmode="numeric" autocomplete="cc-exp" />
               </label>
               <label>
                 CVV
-                <input type="text" name="cardCvv" placeholder="123" />
+                <input type="text" name="cardCvv" placeholder="123" inputmode="numeric" autocomplete="cc-csc" />
               </label>
               <label>
                 Parcelas

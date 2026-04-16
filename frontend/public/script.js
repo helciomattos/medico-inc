@@ -272,6 +272,74 @@
     counters.forEach((c) => observer.observe(c));
   }
 
+  // ─── GA4 event tracking (Prompt 9) ────────────────────────────────────────
+  function initGA4Tracking() {
+    const gtag = window.gtag;
+    if (typeof gtag !== "function") return;
+
+    // Track CTA clicks with utm_medium from href
+    $$("a.btn-primary, a.btn-outline").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const url = new URL(btn.href, location.origin);
+        const medium = url.searchParams.get("utm_medium") || "unknown";
+        gtag("event", "cta_click", {
+          event_category: "engagement",
+          event_label: medium,
+          value: 497
+        });
+      });
+    });
+
+    // Track scroll depth milestones
+    const milestones = [25, 50, 75, 100];
+    const fired = new Set();
+    const onScroll = () => {
+      const pct = Math.round(
+        ((window.scrollY + window.innerHeight) / document.body.scrollHeight) * 100
+      );
+      milestones.forEach((m) => {
+        if (pct >= m && !fired.has(m)) {
+          fired.add(m);
+          gtag("event", "scroll_depth", {
+            event_category: "engagement",
+            event_label: `${m}%`
+          });
+        }
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Track FAQ opens
+    $$(".faq details").forEach((d) => {
+      d.addEventListener("toggle", () => {
+        if (d.open) {
+          const q = $(":scope > summary", d)?.textContent?.trim().slice(0, 60);
+          gtag("event", "faq_open", {
+            event_category: "engagement",
+            event_label: q
+          });
+        }
+      });
+    });
+  }
+
+  // ─── Page transition to checkout (Prompt 6) ──────────────────────────────────
+  function initPageTransition() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    $$('a[href*="checkout.html"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const href = link.href;
+        document.body.classList.add("page-leaving");
+        setTimeout(() => {
+          window.open(href, "_blank", "noopener,noreferrer");
+          document.body.classList.remove("page-leaving");
+        }, 320);
+      });
+    });
+  }
+
   // ─── Init ─────────────────────────────────────────────────────────────────────
   initCounters();
   initTimer();
@@ -281,4 +349,6 @@
   initMagneticButtons();
   initTailorScrollEffect();
   initGsap();
+  initGA4Tracking();
+  initPageTransition();
 })();

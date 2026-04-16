@@ -37,7 +37,13 @@ export async function POST(req: NextRequest) {
   if (eventType === "payment_intent.succeeded") {
     const paymentIntent = event.data as Record<string, unknown> | null;
     console.log(`[webhook/stripe] payment succeeded:`, paymentIntent?.id);
-    // TODO (produção): atualizar status no Supabase
+    // TODO (produção): atualizar status no Supabase e disparar onboarding
+    // await supabaseUpdate(ORDERS_TABLE, `payment_id=eq.${paymentIntent?.id}`, { status: "approved" });
+    // await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/internal`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.INTERNAL_WEBHOOK_TOKEN}` },
+    //   body: JSON.stringify({ event: "payment_confirmed", order_id: "..." }),
+    // });
   }
 
   if (eventType === "payment_intent.payment_failed") {

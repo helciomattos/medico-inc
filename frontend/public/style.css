@@ -572,7 +572,12 @@ p {
 .checkout-express,
 .offer,
 .faq,
-.final-cta {
+.final-cta,
+.problem-stats,
+.purchase-timeline,
+.market-pricing,
+.domain-setup,
+.compare-table {
   padding-top: 88px;
 }
 
@@ -587,7 +592,12 @@ p {
 .checkout-express h2,
 .offer h2,
 .faq h2,
-.final-cta h2 {
+.final-cta h2,
+.problem-stats h2,
+.purchase-timeline h2,
+.market-pricing h2,
+.domain-setup h2,
+.compare-table h2 {
   font-size: clamp(1.9rem, 4vw, 3.2rem);
 }
 
@@ -1670,6 +1680,52 @@ p {
   outline-offset: 2px;
 }
 
+.mobile-sticky-cta {
+  display: none;
+}
+
+/* Page transition landing → checkout (Prompt 6) */
+.page-leaving {
+  animation: pageLeave 0.35s ease-in forwards;
+}
+
+@keyframes pageLeave {
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+/* Skip-to-content (Prompt 9 — WCAG 2.2) */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  padding: 10px 18px;
+  background: var(--brand-dark);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 0 10px 10px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus-visible for all interactive elements (Prompt 9) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+details summary:focus-visible {
+  outline: 3px solid rgba(10, 184, 166, 0.5);
+  outline-offset: 2px;
+}
+
 .whatsapp-float img {
   width: 30px;
   height: 30px;
@@ -1724,7 +1780,8 @@ p {
   .cards-3,
   .live-grid,
   .proof-metrics,
-  .testimonials-grid {
+  .testimonials-grid,
+  .problem-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1929,6 +1986,47 @@ p {
   .whatsapp-float img {
     width: 28px;
     height: 28px;
+  }
+
+  /* Sticky mobile CTA (Prompt 7) */
+  .mobile-sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 25;
+    padding: 10px 16px;
+    background: rgba(19, 34, 47, 0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(10, 184, 166, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-sticky-cta .btn {
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    border-radius: 12px;
+  }
+
+  .mobile-sticky-cta .sticky-price {
+    color: #94a7b8;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .whatsapp-float {
+    bottom: 72px;
+  }
+
+  .final-cta {
+    padding-bottom: 100px;
   }
 
   .proof-bar-inner {
@@ -2157,4 +2255,370 @@ p {
 .compare-with li {
   color: var(--ink);
   font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  PURCHASE TIMELINE — linha do tempo pós-compra                           */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.purchase-timeline header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.purchase-timeline header p:last-child {
+  margin-top: 12px;
+  color: #4f5f70;
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timeline-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 28px;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, #0ab8a6, #0e87ba);
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.timeline-step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.timeline-number {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0a7d72, #0ab8a6);
+  color: #fff;
+  font-family: "Syne", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(10, 125, 114, 0.3);
+  flex-shrink: 0;
+}
+
+.timeline-step h3 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.timeline-step > div > p {
+  color: #4b5b69;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  max-width: 28ch;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  MARKET PRICING — tabela de preços de mercado                            */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.market-pricing header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.market-pricing header h2 {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.pricing-table-wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(16, 40, 59, 0.08);
+  background: #fff;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 0.92rem;
+  border-bottom: 1px solid #edf0e8;
+}
+
+.pricing-table thead th {
+  background: #0f2232;
+  color: #eef8ff;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 18px 20px;
+}
+
+.pricing-table thead th:first-child {
+  border-radius: 16px 0 0 0;
+}
+
+.pricing-table thead th:last-child {
+  border-radius: 0 16px 0 0;
+}
+
+.pricing-table tbody tr:hover {
+  background: #f8faf5;
+}
+
+.pricing-table tbody td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.market-price {
+  color: #8b2d2d;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.included {
+  color: #0a7f75;
+  font-weight: 700;
+}
+
+.check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0ab8a6;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.pricing-table tfoot td {
+  background: #f0faf8;
+  border-bottom: none;
+  padding: 20px;
+  font-size: 1rem;
+}
+
+.market-total {
+  color: #8b2d2d;
+  font-weight: 800;
+  font-family: "Syne", sans-serif;
+  font-size: 1.1rem;
+  text-decoration: line-through;
+}
+
+.included-total {
+  color: #0a7f75;
+}
+
+.included-total strong {
+  font-family: "Syne", sans-serif;
+  font-size: 1.6rem;
+  display: block;
+}
+
+.included-total small {
+  color: #4b6a60;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.pricing-table tfoot td:first-child {
+  border-radius: 0 0 0 16px;
+}
+
+.pricing-table tfoot td:last-child {
+  border-radius: 0 0 16px 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  DOMAIN SETUP — passo a passo domínio + hospedagem + email               */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.domain-setup header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.domain-setup header p.sub {
+  margin-top: 12px;
+  color: #4f5f70;
+  max-width: 64ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.domain-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.domain-step {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 22px;
+  background: rgba(255, 255, 255, 0.82);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.domain-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(16, 40, 59, 0.1);
+}
+
+.domain-step-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #e8f5f3, #d4ede9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.domain-step-icon img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.domain-step-icon .icon-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.domain-step h3 {
+  font-size: 1.08rem;
+  margin-bottom: 10px;
+}
+
+.domain-step p {
+  color: #4b5b69;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.domain-step .step-tag {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #e8f5f3;
+  color: #0a7d72;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.domain-note {
+  margin-top: 32px;
+  text-align: center;
+  padding: 20px 24px;
+  border: 1px solid #c8e0d8;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #f0faf8, #e8f5f2);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.domain-note p {
+  color: #1a4a42;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.domain-note strong {
+  color: #0a7d72;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  RESPONSIVE — novas seções                                               */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1120px) {
+  .timeline-track {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 480px;
+  }
+
+  .timeline-line {
+    display: none;
+  }
+
+  .timeline-step {
+    flex-direction: row;
+    text-align: left;
+    gap: 16px;
+  }
+
+  .domain-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .pricing-table th,
+  .pricing-table td {
+    padding: 12px 14px;
+    font-size: 0.84rem;
+  }
+
+  .market-price {
+    font-size: 0.8rem;
+  }
+
+  .timeline-number {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .domain-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .domain-step {
+    padding: 22px 18px;
+  }
 }

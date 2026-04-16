@@ -38,7 +38,19 @@ export async function POST(req: NextRequest) {
     if (paymentId && SUPABASE_URL && SUPABASE_KEY) {
       // TODO (produção): buscar status real da API MercadoPago e atualizar Supabase
       // const mpStatus = await fetchMPPaymentStatus(paymentId);
-      // await supabaseUpdate(ORDERS_TABLE, { payment_id: paymentId }, { status: mpStatus });
+      // await supabaseUpdate(ORDERS_TABLE, `payment_id=eq.${paymentId}`, { status: mpStatus });
+      //
+      // Se aprovado, disparar webhook interno para iniciar onboarding:
+      // if (mpStatus === "approved") {
+      //   await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/internal`, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "Authorization": `Bearer ${process.env.INTERNAL_WEBHOOK_TOKEN}`,
+      //     },
+      //     body: JSON.stringify({ event: "payment_confirmed", order_id: orderId }),
+      //   });
+      // }
       console.log(`[webhook/mp] payment updated: ${paymentId}`);
     }
   }
