@@ -296,7 +296,7 @@ select:focus {
 .btn {
   border: 0;
   border-radius: 12px;
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", "Syne", sans-serif;
   font-weight: 700;
   font-size: 0.92rem;
   padding: 12px 16px;
