@@ -388,6 +388,26 @@
     rings.forEach(r => obs.observe(r));
   }
 
+  // ─── Press Carousel ───────────────────────────────────────────────────────────
+  function initPressCarousel() {
+    const track = document.getElementById('pressTrack');
+    if (!track) return;
+    const carousel = track.closest('.press-carousel');
+    if (!carousel) return;
+    const prev = carousel.querySelector('.press-nav.prev');
+    const next = carousel.querySelector('.press-nav.next');
+
+    const step = () => {
+      const card = track.querySelector('.press-card');
+      if (!card) return 320;
+      const gap = parseFloat(getComputedStyle(track).gap) || 22;
+      return card.getBoundingClientRect().width + gap;
+    };
+
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left:  step(), behavior: 'smooth' }));
+  }
+
   // ─── Init ─────────────────────────────────────────────────────────────────────
   initCounters();
   initTimer();
@@ -400,4 +420,5 @@
   initGA4Tracking();
   initPageTransition();
   initPerfScores();
+  initPressCarousel();
 })();
