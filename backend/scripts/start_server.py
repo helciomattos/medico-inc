@@ -12,7 +12,13 @@ def main() -> None:
     import uvicorn
 
     settings = get_settings()
-    uvicorn.run("src.main:app", host="0.0.0.0", port=settings.app_port, reload=True)
+    uvicorn.run(
+        "src.main:app",
+        host="0.0.0.0",
+        port=settings.app_port,
+        reload=True,
+        reload_dirs=[str(PROJECT_ROOT / "src"), str(PROJECT_ROOT / "scripts")],
+    )
 
 
 if __name__ == "__main__":

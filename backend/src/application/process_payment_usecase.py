@@ -4,14 +4,14 @@ from typing import Any, Dict
 
 from src.domain.payments import PaymentRequest
 from src.infrastructure.mercadopago_service import MercadoPagoService
-from src.infrastructure.payment_repository import InMemoryPaymentRepository
+from src.infrastructure.payment_repository import PaymentRepository
 from src.infrastructure.stripe_service import StripeService
 
 
 class ProcessPaymentUseCase:
     def __init__(
         self,
-        repository: InMemoryPaymentRepository,
+        repository: PaymentRepository,
         mercadopago_service: MercadoPagoService,
         stripe_service: StripeService,
     ) -> None:

@@ -7,11 +7,12 @@ from fastapi import APIRouter, Query
 from pydantic import BaseModel, Field
 
 from src.application.process_payment_usecase import ProcessPaymentUseCase
-from src.core.config import get_settings
+from src.core.config import Settings, get_settings
 from src.domain.payments import CustomerData, OrderBump, PaymentRequest
 from src.infrastructure.mercadopago_service import MercadoPagoService
-from src.infrastructure.payment_repository import InMemoryPaymentRepository
+from src.infrastructure.payment_repository import InMemoryPaymentRepository, PaymentRepository
 from src.infrastructure.stripe_service import StripeService
+from src.infrastructure.supabase_payment_repository import SupabasePaymentRepository
 
 router = APIRouter(prefix="/api/checkout", tags=["checkout"])
 
@@ -46,10 +47,17 @@ class SaveDraftPayload(BaseModel):
     payload: Dict[str, Any]
 
 
+def _build_repository(settings: Settings) -> PaymentRepository:
+    fallback_repository = InMemoryPaymentRepository()
+    if settings.supabase_url and settings.supabase_service_role_key:
+        return SupabasePaymentRepository(settings=settings, fallback_repository=fallback_repository)
+    return fallback_repository
+
+
 @lru_cache(maxsize=1)
 def _get_usecase() -> ProcessPaymentUseCase:
     settings = get_settings()
-    repository = InMemoryPaymentRepository()
+    repository = _build_repository(settings)
     mp_service = MercadoPagoService(settings)
     stripe_service = StripeService(settings)
     return ProcessPaymentUseCase(repository, mp_service, stripe_service)

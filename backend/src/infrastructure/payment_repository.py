@@ -4,9 +4,17 @@ import threading
 import uuid
 from dataclasses import asdict
 from datetime import datetime, timezone
-from typing import Any, Dict
+from typing import Any, Dict, Protocol
 
 from src.domain.payments import PaymentRequest, PaymentResult
+
+
+class PaymentRepository(Protocol):
+    def create_order(self, gateway: str, request: PaymentRequest, result: PaymentResult) -> str: ...
+
+    def get_order_status(self, order_id: str) -> Dict[str, Any]: ...
+
+    def save_draft(self, payload: Dict[str, Any]) -> Dict[str, Any]: ...
 
 
 class InMemoryPaymentRepository:
